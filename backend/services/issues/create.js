@@ -1,1 +1,7 @@
-module.exports = async () => {};
+module.exports = async (
+  name,
+  content,
+  attachments,
+  newsletterId,
+  templateId
+) => {};
