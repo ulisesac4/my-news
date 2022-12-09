@@ -10,8 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Newsletter.hasMany(models.Issue);
-      models.Newsletter.belongsToMany(models.Recipent, {
-        through: models.NewsletterRecipent,
+      models.Newsletter.belongsToMany(models.Recipient, {
+        through: models.NewsletterRecipient,
       });
     }
   }
