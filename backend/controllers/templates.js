@@ -23,7 +23,7 @@ module.exports = {
     }
   },
   show: async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.params;
     try {
       const template = await TemplateService.show(id);
       res.json({ template });
