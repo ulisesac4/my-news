@@ -1,5 +1,16 @@
 const TemplateService = require("../services/templates");
 module.exports = {
+  /**
+   * @openapi
+   * /issues:
+   *  post:
+   *     tags:
+   *     - Issue
+   *     description: Create an Issue and schedules it
+   *     responses:
+   *       200:
+   *         description: API has created succesfully the Issue
+   */
   create: async (req, res) => {
     const { name, content } = req.body;
     try {
@@ -11,6 +22,17 @@ module.exports = {
       res.send(error.message);
     }
   },
+  /**
+   * @openapi
+   * /issues:
+   *  post:
+   *     tags:
+   *     - Issue
+   *     description: Create an Issue and schedules it
+   *     responses:
+   *       200:
+   *         description: API has created succesfully the Issue
+   */
   destroy: async (req, res) => {
     const { id } = req.body;
     try {
@@ -22,6 +44,17 @@ module.exports = {
       res.send(error.message);
     }
   },
+  /**
+   * @openapi
+   * /issues:
+   *  post:
+   *     tags:
+   *     - Issue
+   *     description: Create an Issue and schedules it
+   *     responses:
+   *       200:
+   *         description: API has created succesfully the Issue
+   */
   show: async (req, res) => {
     const { id } = req.params;
     try {
@@ -33,6 +66,17 @@ module.exports = {
       res.send(error.message);
     }
   },
+  /**
+   * @openapi
+   * /issues:
+   *  post:
+   *     tags:
+   *     - Issue
+   *     description: Create an Issue and schedules it
+   *     responses:
+   *       200:
+   *         description: API has created succesfully the Issue
+   */
   showAll: async (req, res) => {
     try {
       const templates = await TemplateService.showAll();
@@ -43,6 +87,17 @@ module.exports = {
       res.send(error.message);
     }
   },
+  /**
+   * @openapi
+   * /issues:
+   *  post:
+   *     tags:
+   *     - Issue
+   *     description: Create an Issue and schedules it
+   *     responses:
+   *       200:
+   *         description: API has created succesfully the Issue
+   */
   update: async (req, res) => {
     const { id, name, content } = req.body;
     try {
