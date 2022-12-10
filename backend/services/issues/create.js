@@ -16,7 +16,7 @@ module.exports = async (
   const issue = Issue.create({
     name,
     content,
-    attachments,
+    attachments: JSON.stringify(attachments),
     publishDate,
     isSent,
     newsletterId,

@@ -28,7 +28,7 @@ module.exports = async (id) => {
     subject: issue.name,
     text: removeTags(issue.content),
     html: issue.Template.content.replace(">>!content!<<", issue.content),
-    attachments: issue.attachments,
+    attachments: JSON.parse(issue.attachments),
   });
 
   await Issue.update({ isSent: true }, { where: { id } });

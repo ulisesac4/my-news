@@ -18,7 +18,7 @@ module.exports = async (
     {
       name,
       content,
-      attachments,
+      attachments: JSON.stringify(attachments),
       publishDate,
       isSent,
       newsletterId,
