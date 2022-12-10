@@ -7,6 +7,8 @@ module.exports = {
       res.json({ newsletter });
     } catch (error) {
       console.error("Err create newsletter", error);
+      res.status(400);
+      res.send(error.message);
     }
   },
   destroy: async (req, res) => {
@@ -16,6 +18,8 @@ module.exports = {
       res.json({ rowsDeleted });
     } catch (error) {
       console.error("Err destroy newsletter", error);
+      res.status(400);
+      res.send(error.message);
     }
   },
   showAll: async (req, res) => {
@@ -24,6 +28,8 @@ module.exports = {
       res.json({ newsletters });
     } catch (error) {
       console.error("Err index newsletter", error);
+      res.status(400);
+      res.send(error.message);
     }
   },
   update: async (req, res) => {
@@ -33,6 +39,8 @@ module.exports = {
       res.json({ rowsUpdated: result[0] });
     } catch (error) {
       console.error("Err update newsletter", error);
+      res.status(400);
+      res.send(error.message);
     }
   },
 };
