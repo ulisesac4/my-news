@@ -6,7 +6,7 @@ module.exports = {
       const newsletter = await NewsletterService.create(name);
       res.json({ newsletter });
     } catch (error) {
-      console.error("Err create newsletter", error);
+      console.error("[Error] create newsletter", error);
       res.status(400);
       res.send(error.message);
     }
@@ -17,7 +17,7 @@ module.exports = {
       const rowsDeleted = await NewsletterService.destroy(id);
       res.json({ rowsDeleted });
     } catch (error) {
-      console.error("Err destroy newsletter", error);
+      console.error("[Error] destroy newsletter", error);
       res.status(400);
       res.send(error.message);
     }
@@ -27,7 +27,7 @@ module.exports = {
       const newsletters = await NewsletterService.showAll();
       res.json({ newsletters });
     } catch (error) {
-      console.error("Err index newsletter", error);
+      console.error("[Error] index newsletter", error);
       res.status(400);
       res.send(error.message);
     }
@@ -38,7 +38,7 @@ module.exports = {
       const result = await NewsletterService.update(id, name);
       res.json({ rowsUpdated: result[0] });
     } catch (error) {
-      console.error("Err update newsletter", error);
+      console.error("[Error] update newsletter", error);
       res.status(400);
       res.send(error.message);
     }
