@@ -23,7 +23,7 @@ module.exports = async (
     templateId,
   });
 
-  hydratePending
+  hydratePending()
     .then((success) => {
       console.log("Have correctly hydrated unsent issues at issue creation");
     })

@@ -19,7 +19,7 @@ app.use(
   })
 );
 
-app.use("/apiv1", require("./routes"));
+app.use("/", require("./routes"));
 
 app.get("/", (req, res) => {
   res.send("Express Server");

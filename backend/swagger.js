@@ -10,6 +10,7 @@ const options = {
       version: "1.0.0",
     },
   },
+
   // looks for configuration in specified directories
   apis: ["./controllers/*.js"],
 };

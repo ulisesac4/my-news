@@ -27,7 +27,7 @@ module.exports = async (
     { where: { id } }
   );
 
-  hydratePending
+  hydratePending()
     .then((success) => {
       console.log("Have correctly hydrated unsent issues at issue update");
     })
