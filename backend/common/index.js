@@ -1,3 +1,4 @@
 const AttachmentSeralizer = require("./AttachmentSeralizer");
+const NodemailerInstance = require("./NodemailerInstance");
 
-module.exports = { AttachmentSeralizer };
+module.exports = { AttachmentSeralizer, NodemailerInstance };
