@@ -32,4 +32,6 @@ module.exports = async (id) => {
   });
 
   await Issue.update({ isSent: true }, { where: { id } });
+
+  return id;
 };

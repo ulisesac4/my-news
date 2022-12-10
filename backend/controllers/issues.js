@@ -49,6 +49,17 @@ module.exports = {
       res.send(error.message);
     }
   },
+  send: async (req, res) => {
+    const { id } = req.body;
+    try {
+      const idSent = await IssueService.send(id);
+      res.json({ idSent });
+    } catch (error) {
+      console.error("[Error] send issue", error);
+      res.status(400);
+      res.send(error.message);
+    }
+  },
   show: async (req, res) => {
     const { id } = req.params;
     try {

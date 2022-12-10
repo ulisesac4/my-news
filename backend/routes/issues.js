@@ -4,6 +4,7 @@ const Controllers = require("../controllers");
 const router = express.Router();
 
 router.post("/", Controllers.Issues.create);
+router.post("/send", Controllers.Issues.send);
 router.delete("/", Controllers.Issues.destroy);
 router.get("/:id", Controllers.Issues.show);
 router.get("/:newsletterId", Controllers.Issues.showAll);
