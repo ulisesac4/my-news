@@ -6,9 +6,19 @@ module.exports = async (
   name,
   content,
   attachments,
+  publishDate,
+  isSent,
   newsletterId,
   templateId
 ) => {
   attachments = AttachmentSeralizer.serialize(attachments);
-  return Issue.create({ name, content, attachments, newsletterId, templateId });
+  return Issue.create({
+    name,
+    content,
+    attachments,
+    publishDate,
+    isSent,
+    newsletterId,
+    templateId,
+  });
 };

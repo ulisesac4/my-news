@@ -18,6 +18,8 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       content: DataTypes.TEXT,
       attachments: DataTypes.TEXT,
+      isSent: DataTypes.BOOLEAN,
+      publishDate: DataTypes.DATE,
     },
     {
       sequelize,
