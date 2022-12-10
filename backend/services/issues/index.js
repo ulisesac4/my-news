@@ -1,5 +1,6 @@
 const create = require("./create");
 const destroy = require("./destroy");
+const hidratePending = require("./hydratePending");
 const send = require("./send");
 const show = require("./show");
 const showAll = require("./showAll");
