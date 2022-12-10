@@ -1,5 +1,6 @@
 const { AttachmentSeralizer } = require("../../common");
 const Models = require("../../models");
+const hydratePending = require("./hydratePending");
 const Issue = Models.Issue;
 
 module.exports = async (
@@ -12,7 +13,7 @@ module.exports = async (
   templateId
 ) => {
   attachments = AttachmentSeralizer.serialize(attachments);
-  return Issue.create({
+  const issue = Issue.create({
     name,
     content,
     attachments,
@@ -21,4 +22,17 @@ module.exports = async (
     newsletterId,
     templateId,
   });
+
+  hydratePending
+    .then((success) => {
+      console.log("Have correctly hydrated unsent issues at issue creation");
+    })
+    .catch((err) => {
+      console.error(
+        "[Err] Something happened while hydrating pending issues",
+        err
+      );
+    });
+
+  return issue;
 };
