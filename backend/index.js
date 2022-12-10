@@ -2,6 +2,7 @@ require("dotenv").config({ override: true });
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const express = require("express");
+const swagger = require("./swagger");
 const { hydratePending } = require("./services/issues");
 
 const app = express();
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);
+  swagger(app, port);
 });
 
 hydratePending()

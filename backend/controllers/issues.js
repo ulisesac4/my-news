@@ -1,5 +1,16 @@
 const IssueService = require("../services/issues");
 module.exports = {
+  /**
+   * @openapi
+   * /issues:
+   *  post:
+   *     tags:
+   *     - Issue
+   *     description: Create an Issue and schedules it
+   *     responses:
+   *       200:
+   *         description: API has created succesfully the Issue
+   */
   create: async (req, res) => {
     const {
       name,
