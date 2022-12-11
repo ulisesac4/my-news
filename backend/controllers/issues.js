@@ -2,11 +2,11 @@ const IssueService = require("../services/issues");
 module.exports = {
   /**
    * @openapi
-   * /newsletters:
+   * /issues:
    *  post:
    *     tags:
-   *     - Newsletter
-   *     description: Create an Newsletter
+   *     - Issue
+   *     description: Create an Issue
    *     requestBody:
    *       required: true
    *       content:
@@ -16,37 +16,85 @@ module.exports = {
    *             properties:
    *               name:
    *                 type: string
-   *                 description: The Newsletter's name.
-   *                 example: My-Newsletter
+   *                 description: The Issue's name.
+   *                 example: My-Issue
+   *               content:
+   *                 type: string
+   *                 description: The Issue's html content without taking in mind the Template html.
+   *                 example: My-Issue
+   *               attachments:
+   *                 type: string
+   *                 description: The Issue's attachments in array form.
+   *                 example: My-Issue
+   *               publishDate:
+   *                 type: string
+   *                 description: The Issue's publish date.
+   *                 example: My-Issue
+   *               isSent:
+   *                 type: string
+   *                 description: The Issue's state of being sent.
+   *                 example: My-Issue
+   *               newsletterId:
+   *                 type: string
+   *                 description: The Newsletter id where this Issue is put at.
+   *                 example: My-Issue
+   *               templateId:
+   *                 type: string
+   *                 description: The Template id where this Issue is put at.
+   *                 example: My-Issue
    *             required:
    *               - name
    *     responses:
    *       200:
-   *         description: API has created succesfully the Newsletter
+   *         description: API has created succesfully the Issue
    *         content:
    *           application/json:
    *             schema:
    *               type: object
    *               properties:
-   *                 newsletter:
+   *                 issue:
    *                   type: object
    *                   properties:
    *                    id:
-   *                     type: integer
-   *                     description: The create Newsletter ID.
-   *                     example: 1
+   *                      type: integer
+   *                      description: The create Issue ID.
+   *                      example: 1
    *                    name:
-   *                     type: string
-   *                     description: The Newsletter's name.
-   *                     example: My-Newsletter
+   *                      type: string
+   *                      description: The Issue's name.
+   *                      example: My-Issue
+   *                    content:
+   *                      type: string
+   *                      description: The Issue's name.
+   *                      example: My-Issue
+   *                    attachments:
+   *                      type: string
+   *                      description: The Issue's name.
+   *                      example: My-Issue
+   *                    publishDate:
+   *                      type: string
+   *                      description: The Issue's name.
+   *                      example: My-Issue
+   *                    isSent:
+   *                      type: string
+   *                      description: The Issue's name.
+   *                      example: My-Issue
+   *                    NewsletterId:
+   *                      type: string
+   *                      description: The Issue's name.
+   *                      example: My-Issue
+   *                    TemplateId:
+   *                      type: string
+   *                      description: The Issue's name.
+   *                      example: My-Issue
    *                    createdAt:
-   *                     type: string
-   *                     description: The Newsletter's created hour in iso format.
-   *                     example: 2022-12-06T00:53:42Z
+   *                      type: string
+   *                      description: The Issue's created hour in iso format.
+   *                      example: 2022-12-06T00:53:42Z
    *                    updatedAt:
-   *                     type: string
-   *                     description: The Newsletter's updated hour in iso format.
-   *                     example: 2022-12-06T00:53:42Z
+   *                      type: string
+   *                      description: The Issue's updated hour in iso format.
+   *                      example: 2022-12-06T00:53:42Z
    *       400:
    *         description: An error has ocurred
    *         content:
@@ -84,11 +132,11 @@ module.exports = {
   },
   /**
    * @openapi
-   * /newsletters:
+   * /issues:
    *  delete:
    *     tags:
-   *     - Newsletter
-   *     description: Destroy an Newsletter only, issues and recipients will remain but will become inaccesible
+   *     - Issue
+   *     description: Destroy an Issue only
    *     requestBody:
    *       required: true
    *       content:
@@ -98,13 +146,13 @@ module.exports = {
    *             properties:
    *               id:
    *                 type: text
-   *                 description: The Newsletter's id.
+   *                 description: The Issue's id.
    *                 example: 2
    *             required:
    *               - id
    *     responses:
    *       200:
-   *         description: API has deleted succesfully the Newsletter
+   *         description: API has deleted succesfully the Issue
    *         content:
    *           application/json:
    *             schema:
@@ -112,7 +160,7 @@ module.exports = {
    *               properties:
    *                 rowsDeleted:
    *                   type: integer
-   *                   description: The number of newsletters updated, normally must be 1 it may be 0 if it didn't updated.
+   *                   description: The number of issues updated, normally must be 1 it may be 0 if it didn't updated.
    *                   example: 1
    *       400:
    *         description: An error has ocurred
@@ -157,39 +205,61 @@ module.exports = {
   },
   /**
    * @openapi
-   * /newsletters:
+   * /issues/{newsletterId}:
    *  get:
    *     tags:
-   *     - Newsletter
-   *     description: Get all Newsletters
-   *
+   *     - Issue
+   *     description: Get all Issues of a Newsletter
    *     responses:
    *       200:
-   *         description: API has fetched succesfully the Newsletters
+   *         description: API has fetched succesfully the Issues
    *         content:
    *           application/json:
    *             schema:
    *               type: object
    *               properties:
-   *                 newsletters:
+   *                 issues:
    *                   type: array
    *                   items:
    *                     properties:
    *                       id:
-   *                         type: integer
-   *                         description: The Newsletter's ID.
-   *                         example: 1
+   *                        type: integer
+   *                        description: The create Issue ID.
+   *                        example: 1
    *                       name:
-   *                         type: string
-   *                         description: The Newsletter's name.
-   *                         example: My-Newsletter
+   *                        type: string
+   *                        description: The Issue's name.
+   *                        example: My Issue #1
+   *                       content:
+   *                        type: string
+   *                        description: The Issue's html content without taking in mind the Template html.
+   *                       attachments:
+   *                        type: string
+   *                        description: The Issue's attachments in array form.
+   *                        example: [{filename: "name.jpg", content: "The buffer of that file"}]
+   *                       publishDate:
+   *                        type: string
+   *                        description: The Issue's publish date.
+   *                        example: 2022-12-06T00:53:42Z
+   *                       isSent:
+   *                        type: string
+   *                        description: The Issue's state of being sent.
+   *                        example: false
+   *                       NewsletterId:
+   *                        type: string
+   *                        description: The Newsletter id where this Issue is put at.
+   *                        example: 1
+   *                       TemplateId:
+   *                        type: string
+   *                        description: The Template id where this Issue is put at.
+   *                        example: 2
    *                       createdAt:
    *                        type: string
-   *                        description: The Newsletter's created hour in iso format.
+   *                        description: The Issue's created hour in iso format.
    *                        example: 2022-12-06T00:53:42Z
    *                       updatedAt:
    *                        type: string
-   *                        description: The Newsletter's updated hour in iso format.
+   *                        description: The Issue's updated hour in iso format.
    *                        example: 2022-12-06T00:53:42Z
    *       400:
    *         description: An error has ocurred
@@ -212,11 +282,11 @@ module.exports = {
   },
   /**
    * @openapi
-   * /newsletters:
+   * /issues:
    *  patch:
    *     tags:
-   *     - Newsletter
-   *     description: Update an Newsletter
+   *     - Issue
+   *     description: Update an Issue
    *     requestBody:
    *       required: true
    *       content:
@@ -226,18 +296,41 @@ module.exports = {
    *             properties:
    *               id:
    *                 type: integer
-   *                 description: The Newsletter's ID to update.
+   *                 description: The create Issue ID.
    *                 example: 1
    *               name:
    *                 type: string
-   *                 description: The Newsletter's name.
-   *                 example: My-Newsletter
+   *                 description: The Issue's name.
+   *                 example: My Issue #1
+   *               content:
+   *                 type: string
+   *                 description: The Issue's html content without taking in mind the Template html.
+   *               attachments:
+   *                 type: string
+   *                 description: The Issue's attachments in array form.
+   *                 example: [{filename: "name.jpg", content: "The buffer of that file"}]
+   *               publishDate:
+   *                 type: string
+   *                 description: The Issue's publish date.
+   *                 example: 2022-12-06T00:53:42Z
+   *               isSent:
+   *                 type: string
+   *                 description: The Issue's state of being sent.
+   *                 example: false
+   *               newsletterId:
+   *                 type: string
+   *                 description: The Newsletter id where this Issue is put at.
+   *                 example: 1
+   *               templateId:
+   *                 type: string
+   *                 description: The Template id where this Issue is put at.
+   *                 example: 2
    *             required:
    *               - id
    *               - name
    *     responses:
    *       200:
-   *         description: API has updated succesfully the Newsletter
+   *         description: API has updated succesfully the Issue
    *         content:
    *           application/json:
    *             schema:
@@ -245,7 +338,7 @@ module.exports = {
    *               properties:
    *                 rowsUpdated:
    *                   type: integer
-   *                   description: The number of newsletters updated, normally must be 1 it may be 0 if it didn't updated.
+   *                   description: The number of issues updated, normally must be 1 it may be 0 if it didn't updated.
    *                   example: 1
    *
    *       400:

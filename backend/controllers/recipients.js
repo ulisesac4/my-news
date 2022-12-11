@@ -126,12 +126,19 @@ module.exports = {
   },
   /**
    * @openapi
-   * /recipients:
+   * /recipients/{id}:
    *  get:
    *     tags:
    *     - Recipient
    *     description: Get all Recipients
-   *
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         schema:
+   *           type: integer
+   *         required: true
+   *         description: The Template's id.
+   *         example: 2
    *     responses:
    *       200:
    *         description: API has fetched succesfully the Recipients
