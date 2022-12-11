@@ -181,6 +181,46 @@ module.exports = {
       res.send(error.message);
     }
   },
+  /**
+   * @openapi
+   * /issues/send:
+   *  post:
+   *     tags:
+   *     - Issue
+   *     description: Sends an Issue
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               id:
+   *                 type: text
+   *                 description: The Issue's id.
+   *                 example: 2
+   *             required:
+   *               - id
+   *     responses:
+   *       200:
+   *         description: API has sent succesfully the Issue
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 isSent:
+   *                   type: booelan
+   *                   description: Checks if the issue was sent or not
+   *                   example: true
+   *       400:
+   *         description: An error has ocurred
+   *         content:
+   *           text/plain; charset=utf-8:
+   *             schema:
+   *               type: string
+   *               example: name is invalid
+   */
   send: async (req, res) => {
     const { id } = req.body;
     try {
@@ -192,6 +232,79 @@ module.exports = {
       res.send(error.message);
     }
   },
+  /**
+   * @openapi
+   * /issues/issue/{id}:
+   *  get:
+   *     tags:
+   *     - Issue
+   *     description: Get one Issues of
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         schema:
+   *           type: integer
+   *         required: true
+   *         description: The Issue's id.
+   *         example: 2
+   *     responses:
+   *       200:
+   *         description: API has fetched succesfully the Issue
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 issue:
+   *                   type: object
+   *                   properties:
+   *                       id:
+   *                        type: integer
+   *                        description: The create Issue ID.
+   *                        example: 1
+   *                       name:
+   *                        type: string
+   *                        description: The Issue's name.
+   *                        example: My Issue #1
+   *                       content:
+   *                        type: string
+   *                        description: The Issue's html content without taking in mind the Template html.
+   *                       attachments:
+   *                        type: array
+   *                        description: The Issue's attachments in array form.
+   *                        example: [{filename: "name.jpg", content: "The buffer of that file"}]
+   *                       publishDate:
+   *                        type: string
+   *                        description: The Issue's publish date.
+   *                        example: 2022-12-06T00:53:42Z
+   *                       isSent:
+   *                        type: string
+   *                        description: The Issue's state of being sent.
+   *                        example: false
+   *                       NewsletterId:
+   *                        type: string
+   *                        description: The Newsletter id where this Issue is put at.
+   *                        example: 1
+   *                       TemplateId:
+   *                        type: string
+   *                        description: The Template id where this Issue is put at.
+   *                        example: 2
+   *                       createdAt:
+   *                        type: string
+   *                        description: The Issue's created hour in iso format.
+   *                        example: 2022-12-06T00:53:42Z
+   *                       updatedAt:
+   *                        type: string
+   *                        description: The Issue's updated hour in iso format.
+   *                        example: 2022-12-06T00:53:42Z
+   *       400:
+   *         description: An error has ocurred
+   *         content:
+   *           text/plain; charset=utf-8:
+   *             schema:
+   *               type: string
+   *               example: name is invalid
+   */
   show: async (req, res) => {
     const { id } = req.params;
     try {
@@ -210,6 +323,14 @@ module.exports = {
    *     tags:
    *     - Issue
    *     description: Get all Issues of a Newsletter
+   *     parameters:
+   *       - in: path
+   *         name: newsletterId
+   *         schema:
+   *           type: integer
+   *         required: true
+   *         description: The Newsletter's id.
+   *         example: 2
    *     responses:
    *       200:
    *         description: API has fetched succesfully the Issues
