@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web:
+    build: ./backend
+    volumes:
+      - ./backend:/myapp
+      - /myapp/node_modules
+    ports:
+      - '9876:9876'
+      
+    environment:
+      BASE_DOMAIN: 'http://localhost:5000'
+     
