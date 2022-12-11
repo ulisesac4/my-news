@@ -2,11 +2,11 @@ const RecipientService = require("../services/recipients");
 module.exports = {
   /**
    * @openapi
-   * /newsletters:
+   * /recipients:
    *  post:
    *     tags:
-   *     - Newsletter
-   *     description: Create an Newsletter
+   *     - Recipient
+   *     description: Create an Recipient
    *     requestBody:
    *       required: true
    *       content:
@@ -14,38 +14,44 @@ module.exports = {
    *           schema:
    *             type: object
    *             properties:
-   *               name:
-   *                 type: string
-   *                 description: The Newsletter's name.
-   *                 example: My-Newsletter
+   *                emails:
+   *                  type: array
+   *                  items:
+   *                    type: string
+   *                    example: "onemail@gmail.com"
+   *                newsletterId:
+   *                  description: The id of the Newsletter where these recipients will be put at.
+   *                  type: string
+   *                  example: 1
    *             required:
-   *               - name
+   *               - emails
+   *               - newsletterId
    *     responses:
    *       200:
-   *         description: API has created succesfully the Newsletter
+   *         description: API has created succesfully the Recipient
    *         content:
    *           application/json:
    *             schema:
    *               type: object
    *               properties:
-   *                 newsletter:
+   *                 recipients:
    *                   type: object
    *                   properties:
    *                    id:
    *                     type: integer
-   *                     description: The create Newsletter ID.
+   *                     description: The create Recipient ID.
    *                     example: 1
-   *                    name:
+   *                    email:
    *                     type: string
-   *                     description: The Newsletter's name.
-   *                     example: My-Newsletter
+   *                     description: The Recipient's email.
+   *                     example: one-mail@gmail.com
    *                    createdAt:
    *                     type: string
-   *                     description: The Newsletter's created hour in iso format.
+   *                     description: The Recipient's created hour in iso format.
    *                     example: 2022-12-06T00:53:42Z
    *                    updatedAt:
    *                     type: string
-   *                     description: The Newsletter's updated hour in iso format.
+   *                     description: The Recipient's updated hour in iso format.
    *                     example: 2022-12-06T00:53:42Z
    *       400:
    *         description: An error has ocurred
@@ -57,6 +63,7 @@ module.exports = {
    */
   create: async (req, res) => {
     const { emails, newsletterId } = req.body;
+    console.log(req.body);
     try {
       const recipients = await RecipientService.create(emails, newsletterId);
       res.json({ recipients });
@@ -68,11 +75,11 @@ module.exports = {
   },
   /**
    * @openapi
-   * /newsletters:
+   * /recipients:
    *  delete:
    *     tags:
-   *     - Newsletter
-   *     description: Destroy an Newsletter only, issues and recipients will remain but will become inaccesible
+   *     - Recipient
+   *     description: Destroy an Recipient only
    *     requestBody:
    *       required: true
    *       content:
@@ -82,13 +89,13 @@ module.exports = {
    *             properties:
    *               id:
    *                 type: text
-   *                 description: The Newsletter's id.
+   *                 description: The Recipient's id.
    *                 example: 2
    *             required:
    *               - id
    *     responses:
    *       200:
-   *         description: API has deleted succesfully the Newsletter
+   *         description: API has deleted succesfully the Recipient
    *         content:
    *           application/json:
    *             schema:
@@ -96,7 +103,7 @@ module.exports = {
    *               properties:
    *                 rowsDeleted:
    *                   type: integer
-   *                   description: The number of newsletters updated, normally must be 1 it may be 0 if it didn't updated.
+   *                   description: The number of recipients updated, normally must be 1 it may be 0 if it didn't updated.
    *                   example: 1
    *       400:
    *         description: An error has ocurred
@@ -119,40 +126,39 @@ module.exports = {
   },
   /**
    * @openapi
-   * /newsletters:
+   * /recipients:
    *  get:
    *     tags:
-   *     - Newsletter
-   *     description: Get all Newsletters
+   *     - Recipient
+   *     description: Get all Recipients
    *
    *     responses:
    *       200:
-   *         description: API has fetched succesfully the Newsletters
+   *         description: API has fetched succesfully the Recipients
    *         content:
    *           application/json:
    *             schema:
    *               type: object
    *               properties:
-   *                 newsletters:
-   *                   type: array
-   *                   items:
-   *                     properties:
-   *                       id:
-   *                         type: integer
-   *                         description: The Newsletter's ID.
-   *                         example: 1
-   *                       name:
-   *                         type: string
-   *                         description: The Newsletter's name.
-   *                         example: My-Newsletter
-   *                       createdAt:
-   *                        type: string
-   *                        description: The Newsletter's created hour in iso format.
-   *                        example: 2022-12-06T00:53:42Z
-   *                       updatedAt:
-   *                        type: string
-   *                        description: The Newsletter's updated hour in iso format.
-   *                        example: 2022-12-06T00:53:42Z
+   *                 recipients:
+   *                   type: object
+   *                   properties:
+   *                    id:
+   *                     type: integer
+   *                     description: The create Recipient ID.
+   *                     example: 1
+   *                    email:
+   *                     type: string
+   *                     description: The Recipient's email.
+   *                     example: one-mail@gmail.com
+   *                    createdAt:
+   *                     type: string
+   *                     description: The Recipient's created hour in iso format.
+   *                     example: 2022-12-06T00:53:42Z
+   *                    updatedAt:
+   *                     type: string
+   *                     description: The Recipient's updated hour in iso format.
+   *                     example: 2022-12-06T00:53:42Z
    *       400:
    *         description: An error has ocurred
    *         content:
