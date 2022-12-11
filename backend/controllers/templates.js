@@ -2,14 +2,58 @@ const TemplateService = require("../services/templates");
 module.exports = {
   /**
    * @openapi
-   * /issues:
+   * /templates:
    *  post:
    *     tags:
-   *     - Issue
-   *     description: Create an Issue and schedules it
+   *     - Template
+   *     description: Create an Template
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               name:
+   *                 type: string
+   *                 description: The Template's name.
+   *                 example: My-Template
+   *             required:
+   *               - name
    *     responses:
    *       200:
-   *         description: API has created succesfully the Issue
+   *         description: API has created succesfully the Template
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 template:
+   *                   type: object
+   *                   properties:
+   *                    id:
+   *                     type: integer
+   *                     description: The create Template ID.
+   *                     example: 1
+   *                    name:
+   *                     type: string
+   *                     description: The Template's name.
+   *                     example: My-Template
+   *                    createdAt:
+   *                     type: string
+   *                     description: The Template's created hour in iso format.
+   *                     example: 2022-12-06T00:53:42Z
+   *                    updatedAt:
+   *                     type: string
+   *                     description: The Template's updated hour in iso format.
+   *                     example: 2022-12-06T00:53:42Z
+   *       400:
+   *         description: An error has ocurred
+   *         content:
+   *           text/plain; charset=utf-8:
+   *             schema:
+   *               type: string
+   *               example: name is invalid
    */
   create: async (req, res) => {
     const { name, content } = req.body;
@@ -24,14 +68,43 @@ module.exports = {
   },
   /**
    * @openapi
-   * /issues:
-   *  post:
+   * /templates:
+   *  delete:
    *     tags:
-   *     - Issue
-   *     description: Create an Issue and schedules it
+   *     - Template
+   *     description: Destroy an Template only, issues and recipients will remain but will become inaccesible
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               id:
+   *                 type: text
+   *                 description: The Template's id.
+   *                 example: 2
+   *             required:
+   *               - id
    *     responses:
    *       200:
-   *         description: API has created succesfully the Issue
+   *         description: API has deleted succesfully the Template
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 rowsDeleted:
+   *                   type: integer
+   *                   description: The number of templates updated, normally must be 1 it may be 0 if it didn't updated.
+   *                   example: 1
+   *       400:
+   *         description: An error has ocurred
+   *         content:
+   *           text/plain; charset=utf-8:
+   *             schema:
+   *               type: string
+   *               example: name is invalid
    */
   destroy: async (req, res) => {
     const { id } = req.body;
@@ -68,14 +141,47 @@ module.exports = {
   },
   /**
    * @openapi
-   * /issues:
-   *  post:
+   * /templates:
+   *  get:
    *     tags:
-   *     - Issue
-   *     description: Create an Issue and schedules it
+   *     - Template
+   *     description: Get all Templates
+   *
    *     responses:
    *       200:
-   *         description: API has created succesfully the Issue
+   *         description: API has fetched succesfully the Templates
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 templates:
+   *                   type: array
+   *                   items:
+   *                     properties:
+   *                       id:
+   *                         type: integer
+   *                         description: The Template's ID.
+   *                         example: 1
+   *                       name:
+   *                         type: string
+   *                         description: The Template's name.
+   *                         example: My-Template
+   *                       createdAt:
+   *                        type: string
+   *                        description: The Template's created hour in iso format.
+   *                        example: 2022-12-06T00:53:42Z
+   *                       updatedAt:
+   *                        type: string
+   *                        description: The Template's updated hour in iso format.
+   *                        example: 2022-12-06T00:53:42Z
+   *       400:
+   *         description: An error has ocurred
+   *         content:
+   *           text/plain; charset=utf-8:
+   *             schema:
+   *               type: string
+   *               example: name is invalid
    */
   showAll: async (req, res) => {
     try {
@@ -89,14 +195,49 @@ module.exports = {
   },
   /**
    * @openapi
-   * /issues:
-   *  post:
+   * /templates:
+   *  patch:
    *     tags:
-   *     - Issue
-   *     description: Create an Issue and schedules it
+   *     - Template
+   *     description: Update an Template
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               id:
+   *                 type: integer
+   *                 description: The Template's ID to update.
+   *                 example: 1
+   *               name:
+   *                 type: string
+   *                 description: The Template's name.
+   *                 example: My-Template
+   *             required:
+   *               - id
+   *               - name
    *     responses:
    *       200:
-   *         description: API has created succesfully the Issue
+   *         description: API has updated succesfully the Template
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 rowsUpdated:
+   *                   type: integer
+   *                   description: The number of templates updated, normally must be 1 it may be 0 if it didn't updated.
+   *                   example: 1
+   *
+   *       400:
+   *         description: An error has ocurred
+   *         content:
+   *           text/plain; charset=utf-8:
+   *             schema:
+   *               type: string
+   *               example: name is invalid
    */
   update: async (req, res) => {
     const { id, name, content } = req.body;
