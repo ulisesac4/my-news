@@ -18,8 +18,12 @@ module.exports = {
    *                 type: string
    *                 description: The Template's name.
    *                 example: My-Template
+   *               content:
+   *                 type: string
+   *                 description: The Template's html content. It must contain the element ">>!content!<<" without "" in the desired tag, this is where the newsletter lives.
    *             required:
    *               - name
+   *               - content
    *     responses:
    *       200:
    *         description: API has created succesfully the Template
@@ -39,6 +43,9 @@ module.exports = {
    *                     type: string
    *                     description: The Template's name.
    *                     example: My-Template
+   *                    content:
+   *                     type: string
+   *                     description: The Template's html content.
    *                    createdAt:
    *                     type: string
    *                     description: The Template's created hour in iso format.
@@ -72,7 +79,7 @@ module.exports = {
    *  delete:
    *     tags:
    *     - Template
-   *     description: Destroy an Template only, issues and recipients will remain but will become inaccesible
+   *     description: Destroy an Template only, issues related to this won't be able to send their newsletter.
    *     requestBody:
    *       required: true
    *       content:
@@ -119,14 +126,57 @@ module.exports = {
   },
   /**
    * @openapi
-   * /issues:
-   *  post:
+   * /templates/{id}:
+   *  get:
    *     tags:
-   *     - Issue
-   *     description: Create an Issue and schedules it
+   *     - Template
+   *     description: Show the full contents of a Template
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         schema:
+   *           type: integer
+   *         required: true
+   *         description: The Template's id.
+   *         example: 2
+   *
    *     responses:
    *       200:
-   *         description: API has created succesfully the Issue
+   *         description: API has shown succesfully the details of the Template
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 template:
+   *                   type: object
+   *                   properties:
+   *                    id:
+   *                     type: integer
+   *                     description: The create Template ID.
+   *                     example: 1
+   *                    name:
+   *                     type: string
+   *                     description: The Template's name.
+   *                     example: My-Template
+   *                    content:
+   *                     type: string
+   *                     description: The Template's html content.
+   *                    createdAt:
+   *                     type: string
+   *                     description: The Template's created hour in iso format.
+   *                     example: 2022-12-06T00:53:42Z
+   *                    updatedAt:
+   *                     type: string
+   *                     description: The Template's updated hour in iso format.
+   *                     example: 2022-12-06T00:53:42Z
+   *       400:
+   *         description: An error has ocurred
+   *         content:
+   *           text/plain; charset=utf-8:
+   *             schema:
+   *               type: string
+   *               example: name is invalid
    */
   show: async (req, res) => {
     const { id } = req.params;
@@ -146,10 +196,9 @@ module.exports = {
    *     tags:
    *     - Template
    *     description: Get all Templates
-   *
    *     responses:
    *       200:
-   *         description: API has fetched succesfully the Templates
+   *         description: API has fetched succesfully all the Templates
    *         content:
    *           application/json:
    *             schema:
@@ -167,14 +216,17 @@ module.exports = {
    *                         type: string
    *                         description: The Template's name.
    *                         example: My-Template
+   *                       content:
+   *                         type: string
+   *                         description: The Template's html content.
    *                       createdAt:
-   *                        type: string
-   *                        description: The Template's created hour in iso format.
-   *                        example: 2022-12-06T00:53:42Z
+   *                         type: string
+   *                         description: The Template's created hour in iso format.
+   *                         example: 2022-12-06T00:53:42Z
    *                       updatedAt:
-   *                        type: string
-   *                        description: The Template's updated hour in iso format.
-   *                        example: 2022-12-06T00:53:42Z
+   *                         type: string
+   *                         description: The Template's updated hour in iso format.
+   *                         example: 2022-12-06T00:53:42Z
    *       400:
    *         description: An error has ocurred
    *         content:
@@ -215,6 +267,9 @@ module.exports = {
    *                 type: string
    *                 description: The Template's name.
    *                 example: My-Template
+   *               content:
+   *                 type: string
+   *                 description: The Template's html content.
    *             required:
    *               - id
    *               - name
