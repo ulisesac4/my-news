@@ -24,6 +24,8 @@ function Newsletters() {
   const [newsletters, setNewsletters] = useState<
     NewslettersDelete200ResponseNewslettersInner[]
   >([{ createdAt: "", id: 1, name: "", updatedAt: "" }]);
+  const [selectedNewsletter, setSelectedNewsletter] =
+    useState<NewslettersDelete200ResponseNewslettersInner>({});
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,6 +64,7 @@ function Newsletters() {
   };
 
   const closeUpdateDialog = async () => {
+    setSelectedNewsletter({});
     setIsUpdateOpen(false);
     fetchNewsletters()
       .then((success) => {})
@@ -120,6 +123,7 @@ function Newsletters() {
                         <IconButton
                           size="small"
                           onClick={async () => {
+                            setSelectedNewsletter(newsletter);
                             openUpdateDialog();
                           }}
                         >
@@ -157,6 +161,8 @@ function Newsletters() {
         onClose={() => {
           closeUpdateDialog();
         }}
+        newsletterId={selectedNewsletter.id}
+        oldNewsletterName={selectedNewsletter.name}
       />
     </PageTemplate>
   );

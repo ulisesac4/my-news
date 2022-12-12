@@ -7,12 +7,39 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
+import { useState } from "react";
+import { NewsletterApi } from "src/core/API";
 
 function CreateNewsletterDialog({ open, onClose }) {
+  const NewslettersAPI = new NewsletterApi();
+  const [newsletterName, setNewsletterName] = useState("");
+
+  const createNewsletter = async () => {
+    try {
+      //setIsLoading(true);
+      const newsletters = await NewslettersAPI.newslettersPost({
+        name: newsletterName,
+      });
+      if (newsletters.status === 200) {
+        //setNewsletters(newsletters.data.newsletters);
+
+        onClose();
+      } else {
+        // error message here
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setNewsletterName("");
+      //setIsLoading(false);
+    }
+  };
+
   return (
     <Dialog
       open={open}
       onClose={() => {
+        setNewsletterName("");
         onClose();
       }}
     >
@@ -29,6 +56,10 @@ function CreateNewsletterDialog({ open, onClose }) {
           type="text"
           fullWidth
           variant="standard"
+          value={newsletterName}
+          onChange={(event) => {
+            setNewsletterName(event.target.value);
+          }}
         />
       </DialogContent>
       <DialogActions>
@@ -40,11 +71,11 @@ function CreateNewsletterDialog({ open, onClose }) {
           Cancel
         </Button>
         <Button
-          onClick={() => {
-            onClose();
+          onClick={async () => {
+            await createNewsletter();
           }}
         >
-          Subscribe
+          Create
         </Button>
       </DialogActions>
     </Dialog>
