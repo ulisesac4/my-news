@@ -1,4 +1,12 @@
-import { Dialog } from "@mui/material";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from "@mui/material";
 
 function CreateNewsletterDialog({ open, onClose }) {
   return (
@@ -8,7 +16,37 @@ function CreateNewsletterDialog({ open, onClose }) {
         onClose();
       }}
     >
-      x
+      <DialogTitle>Create a Newsletter</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          To create Issues add a Newsletter.
+        </DialogContentText>
+        <TextField
+          autoFocus
+          margin="dense"
+          id="name"
+          label="Your new Newsletter's name"
+          type="text"
+          fullWidth
+          variant="standard"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={() => {
+            onClose();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            onClose();
+          }}
+        >
+          Subscribe
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

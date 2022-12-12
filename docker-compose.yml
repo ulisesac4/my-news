@@ -7,6 +7,13 @@ services:
       - /myapp/node_modules
     ports:
       - '9876:9876'
+  front:
+    build: ./frontend
+    volumes:
+      - ./frontend:/myapp
+      - /myapp/node_modules
+    ports:
+      - '8765:8765'
       
     environment:
       BASE_DOMAIN: 'http://localhost:5000'
