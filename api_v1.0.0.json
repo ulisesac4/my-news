@@ -1,5 +1,10 @@
 {
   "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "http://localhost:9876"
+    }
+  ],
   "info": {
     "title": "MyNewsletter API",
     "description": "Example of CRUD API",
@@ -8,9 +13,7 @@
   "paths": {
     "/issues": {
       "post": {
-        "tags": [
-          "Issue"
-        ],
+        "tags": ["Issue"],
         "description": "Create an Issue",
         "requestBody": {
           "required": true,
@@ -55,9 +58,7 @@
                     "example": "My-Issue"
                   }
                 },
-                "required": [
-                  "name"
-                ]
+                "required": ["name"]
               }
             }
           }
@@ -144,9 +145,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Issue"
-        ],
+        "tags": ["Issue"],
         "description": "Destroy an Issue only",
         "requestBody": {
           "required": true,
@@ -161,9 +160,7 @@
                     "example": 2
                   }
                 },
-                "required": [
-                  "id"
-                ]
+                "required": ["id"]
               }
             }
           }
@@ -200,9 +197,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Issue"
-        ],
+        "tags": ["Issue"],
         "description": "Update an Issue",
         "requestBody": {
           "required": true,
@@ -256,10 +251,7 @@
                     "example": 2
                   }
                 },
-                "required": [
-                  "id",
-                  "name"
-                ]
+                "required": ["id", "name"]
               }
             }
           }
@@ -298,9 +290,7 @@
     },
     "/issues/send": {
       "post": {
-        "tags": [
-          "Issue"
-        ],
+        "tags": ["Issue"],
         "description": "Sends an Issue",
         "requestBody": {
           "required": true,
@@ -315,9 +305,7 @@
                     "example": 2
                   }
                 },
-                "required": [
-                  "id"
-                ]
+                "required": ["id"]
               }
             }
           }
@@ -356,9 +344,7 @@
     },
     "/issues/issue/{id}": {
       "get": {
-        "tags": [
-          "Issue"
-        ],
+        "tags": ["Issue"],
         "description": "Get one Issues of",
         "parameters": [
           {
@@ -464,9 +450,7 @@
     },
     "/issues/{newsletterId}": {
       "get": {
-        "tags": [
-          "Issue"
-        ],
+        "tags": ["Issue"],
         "description": "Get all Issues of a Newsletter",
         "parameters": [
           {
@@ -570,9 +554,7 @@
     },
     "/newsletters": {
       "post": {
-        "tags": [
-          "Newsletter"
-        ],
+        "tags": ["Newsletter"],
         "description": "Create an Newsletter",
         "requestBody": {
           "required": true,
@@ -587,9 +569,7 @@
                     "example": "My-Newsletter"
                   }
                 },
-                "required": [
-                  "name"
-                ]
+                "required": ["name"]
               }
             }
           }
@@ -646,9 +626,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Newsletter"
-        ],
+        "tags": ["Newsletter"],
         "description": "Destroy an Newsletter only, issues and recipients will remain but will become inaccesible",
         "requestBody": {
           "required": true,
@@ -663,9 +641,7 @@
                     "example": 2
                   }
                 },
-                "required": [
-                  "id"
-                ]
+                "required": ["id"]
               }
             }
           }
@@ -702,9 +678,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Newsletter"
-        ],
+        "tags": ["Newsletter"],
         "description": "Get all Newsletters",
         "responses": {
           "200": {
@@ -760,9 +734,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Newsletter"
-        ],
+        "tags": ["Newsletter"],
         "description": "Update an Newsletter",
         "requestBody": {
           "required": true,
@@ -782,10 +754,7 @@
                     "example": "My-Newsletter"
                   }
                 },
-                "required": [
-                  "id",
-                  "name"
-                ]
+                "required": ["id", "name"]
               }
             }
           }
@@ -824,9 +793,7 @@
     },
     "/recipients": {
       "post": {
-        "tags": [
-          "Recipient"
-        ],
+        "tags": ["Recipient"],
         "description": "Create an Recipient",
         "requestBody": {
           "required": true,
@@ -848,10 +815,7 @@
                     "example": 1
                   }
                 },
-                "required": [
-                  "emails",
-                  "newsletterId"
-                ]
+                "required": ["emails", "newsletterId"]
               }
             }
           }
@@ -908,9 +872,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Recipient"
-        ],
+        "tags": ["Recipient"],
         "description": "Destroy an Recipient only",
         "requestBody": {
           "required": true,
@@ -925,9 +887,7 @@
                     "example": 2
                   }
                 },
-                "required": [
-                  "id"
-                ]
+                "required": ["id"]
               }
             }
           }
@@ -966,9 +926,7 @@
     },
     "/recipients/{id}": {
       "get": {
-        "tags": [
-          "Recipient"
-        ],
+        "tags": ["Recipient"],
         "description": "Get all Recipients",
         "parameters": [
           {
@@ -1036,9 +994,7 @@
     },
     "/templates": {
       "post": {
-        "tags": [
-          "Template"
-        ],
+        "tags": ["Template"],
         "description": "Create an Template",
         "requestBody": {
           "required": true,
@@ -1057,10 +1013,7 @@
                     "description": "The Template's html content. It must contain the element \">>!content!<<\" without \"\" in the desired tag, this is where the newsletter lives."
                   }
                 },
-                "required": [
-                  "name",
-                  "content"
-                ]
+                "required": ["name", "content"]
               }
             }
           }
@@ -1121,9 +1074,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Template"
-        ],
+        "tags": ["Template"],
         "description": "Destroy an Template only, issues related to this won't be able to send their newsletter.",
         "requestBody": {
           "required": true,
@@ -1138,9 +1089,7 @@
                     "example": 2
                   }
                 },
-                "required": [
-                  "id"
-                ]
+                "required": ["id"]
               }
             }
           }
@@ -1177,9 +1126,7 @@
         }
       },
       "get": {
-        "tags": [
-          "Template"
-        ],
+        "tags": ["Template"],
         "description": "Get all Templates",
         "responses": {
           "200": {
@@ -1239,9 +1186,7 @@
         }
       },
       "patch": {
-        "tags": [
-          "Template"
-        ],
+        "tags": ["Template"],
         "description": "Update an Template",
         "requestBody": {
           "required": true,
@@ -1265,10 +1210,7 @@
                     "description": "The Template's html content."
                   }
                 },
-                "required": [
-                  "id",
-                  "name"
-                ]
+                "required": ["id", "name"]
               }
             }
           }
@@ -1307,9 +1249,7 @@
     },
     "/templates/{id}": {
       "get": {
-        "tags": [
-          "Template"
-        ],
+        "tags": ["Template"],
         "description": "Show the full contents of a Template",
         "parameters": [
           {
