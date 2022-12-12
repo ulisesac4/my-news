@@ -17,6 +17,8 @@ import {
   NewsletterApi,
   NewslettersDelete200ResponseNewslettersInner,
 } from "src/core/API";
+import CreateNewsletterDialog from "./createNewsletterDialog";
+import UpdateNewsletterDialog from "./updateNewsletterDialog";
 
 function Newsletters() {
   const [newsletters, setNewsletters] = useState<
@@ -66,6 +68,24 @@ function Newsletters() {
       .catch((err) => {});
   };
 
+  const destroyNewsletter = async (id) => {
+    try {
+      setIsLoading(true);
+      const newsletters = await NewslettersAPI.newslettersDelete({ id });
+      if (newsletters.status === 200) {
+      } else {
+        // error message here
+      }
+      fetchNewsletters()
+        .then((success) => {})
+        .catch((err) => {});
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchNewsletters();
   }, []);
@@ -97,12 +117,22 @@ function Newsletters() {
                     <TableCell>{newsletter.name}</TableCell>
                     <TableCell align="center">
                       <Tooltip title="Edit Newsletter's Name" arrow>
-                        <IconButton size="small">
+                        <IconButton
+                          size="small"
+                          onClick={async () => {
+                            openUpdateDialog();
+                          }}
+                        >
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Delete Newsletter" arrow>
-                        <IconButton size="small">
+                        <IconButton
+                          size="small"
+                          onClick={async () => {
+                            await destroyNewsletter(newsletter.id);
+                          }}
+                        >
                           <DeleteTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
@@ -116,6 +146,18 @@ function Newsletters() {
           </TableBody>
         </Table>
       </TableContainer>
+      <CreateNewsletterDialog
+        open={isCreateOpen}
+        onClose={() => {
+          closeCreateDialog();
+        }}
+      />
+      <UpdateNewsletterDialog
+        open={isUpdateOpen}
+        onClose={() => {
+          closeUpdateDialog();
+        }}
+      />
     </PageTemplate>
   );
 }
