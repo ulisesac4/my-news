@@ -81,7 +81,7 @@ module.exports = {
    *             type: object
    *             properties:
    *               id:
-   *                 type: text
+   *                 type: string
    *                 description: The Newsletter's id.
    *                 example: 2
    *             required:

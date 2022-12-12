@@ -88,7 +88,7 @@ module.exports = {
    *             type: object
    *             properties:
    *               id:
-   *                 type: text
+   *                 type: string
    *                 description: The Template's id.
    *                 example: 2
    *             required:

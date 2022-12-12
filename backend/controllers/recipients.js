@@ -88,7 +88,7 @@ module.exports = {
    *             type: object
    *             properties:
    *               id:
-   *                 type: text
+   *                 type: string
    *                 description: The Recipient's id.
    *                 example: 2
    *             required:

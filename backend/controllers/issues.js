@@ -145,7 +145,7 @@ module.exports = {
    *             type: object
    *             properties:
    *               id:
-   *                 type: text
+   *                 type: string
    *                 description: The Issue's id.
    *                 example: 2
    *             required:
@@ -196,7 +196,7 @@ module.exports = {
    *             type: object
    *             properties:
    *               id:
-   *                 type: text
+   *                 type: string
    *                 description: The Issue's id.
    *                 example: 2
    *             required:
@@ -210,7 +210,7 @@ module.exports = {
    *               type: object
    *               properties:
    *                 isSent:
-   *                   type: booelan
+   *                   type: boolean
    *                   description: Checks if the issue was sent or not
    *                   example: true
    *       400:
@@ -258,45 +258,48 @@ module.exports = {
    *                 issue:
    *                   type: object
    *                   properties:
-   *                       id:
-   *                        type: integer
-   *                        description: The create Issue ID.
-   *                        example: 1
-   *                       name:
-   *                        type: string
-   *                        description: The Issue's name.
-   *                        example: My Issue #1
-   *                       content:
-   *                        type: string
-   *                        description: The Issue's html content without taking in mind the Template html.
-   *                       attachments:
-   *                        type: array
-   *                        description: The Issue's attachments in array form.
-   *                        example: [{filename: "name.jpg", content: "The buffer of that file"}]
-   *                       publishDate:
-   *                        type: string
-   *                        description: The Issue's publish date.
-   *                        example: 2022-12-06T00:53:42Z
-   *                       isSent:
-   *                        type: string
-   *                        description: The Issue's state of being sent.
-   *                        example: false
-   *                       NewsletterId:
-   *                        type: string
-   *                        description: The Newsletter id where this Issue is put at.
-   *                        example: 1
-   *                       TemplateId:
-   *                        type: string
-   *                        description: The Template id where this Issue is put at.
-   *                        example: 2
-   *                       createdAt:
-   *                        type: string
-   *                        description: The Issue's created hour in iso format.
-   *                        example: 2022-12-06T00:53:42Z
-   *                       updatedAt:
-   *                        type: string
-   *                        description: The Issue's updated hour in iso format.
-   *                        example: 2022-12-06T00:53:42Z
+   *                     id:
+   *                       type: integer
+   *                       description: The create Issue ID.
+   *                       example: 1
+   *                     name:
+   *                       type: string
+   *                       description: The Issue's name.
+   *                       example: My Issue #1
+   *                     content:
+   *                       type: string
+   *                       description: The Issue's html content without taking in mind the Template html.
+   *                     attachments:
+   *                       type: array
+   *                       items:
+   *                         type: string
+   *                         example: "onemail@gmail.com"
+   *                       description: The Issue's attachments in array form.
+   *                       example: [{filename: "name.jpg", content: "The buffer of that file"}]
+   *                     publishDate:
+   *                       type: string
+   *                       description: The Issue's publish date.
+   *                       example: 2022-12-06T00:53:42Z
+   *                     isSent:
+   *                       type: string
+   *                       description: The Issue's state of being sent.
+   *                       example: false
+   *                     NewsletterId:
+   *                       type: string
+   *                       description: The Newsletter id where this Issue is put at.
+   *                       example: 1
+   *                     TemplateId:
+   *                       type: string
+   *                       description: The Template id where this Issue is put at.
+   *                       example: 2
+   *                     createdAt:
+   *                       type: string
+   *                       description: The Issue's created hour in iso format.
+   *                       example: 2022-12-06T00:53:42Z
+   *                     updatedAt:
+   *                       type: string
+   *                       description: The Issue's updated hour in iso format.
+   *                       example: 2022-12-06T00:53:42Z
    *       400:
    *         description: An error has ocurred
    *         content:
