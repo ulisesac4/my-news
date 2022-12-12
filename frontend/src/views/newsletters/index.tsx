@@ -1,4 +1,12 @@
-import { useTheme } from "@mui/material";
+import {
+  TableContainer,
+  useTheme,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import PageTemplate from "src/components/PageTemplate";
 import {
@@ -39,7 +47,26 @@ function Newsletters() {
       headerTitle={"Newsletters"}
       pageTitle={"Newsletters"}
     >
-      <p>sd</p>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {newsletters.map((newsletter) => {
+              return (
+                <TableRow key={newsletter.id}>
+                  <TableCell>{newsletter.name}</TableCell>
+                  <TableCell align="center">0</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </PageTemplate>
   );
 }
