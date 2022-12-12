@@ -32,6 +32,7 @@ function UpdateNewsletterDialog({
 
           onClose();
         } else {
+          console.log("error", newsletters.statusText);
           toast("An error in the server ocurred, try again later");
         }
       } else {

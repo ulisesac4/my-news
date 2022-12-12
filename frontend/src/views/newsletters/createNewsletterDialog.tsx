@@ -8,6 +8,7 @@ import {
   Button,
 } from "@mui/material";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { NewsletterApi } from "src/core/API";
 
 function CreateNewsletterDialog({ open, onClose }) {
@@ -16,22 +17,27 @@ function CreateNewsletterDialog({ open, onClose }) {
 
   const createNewsletter = async () => {
     try {
-      //setIsLoading(true);
-      const newsletters = await NewslettersAPI.newslettersPost({
-        name: newsletterName,
-      });
-      if (newsletters.status === 200) {
-        //setNewsletters(newsletters.data.newsletters);
-
-        onClose();
+      if (newsletterName) {
+        const newsletters = await NewslettersAPI.newslettersPost({
+          name: newsletterName,
+        });
+        if (newsletters.status === 200) {
+          toast("Newsletter have been created successfully");
+          onClose();
+        } else {
+          console.log("error", newsletters.statusText);
+          toast(
+            "There was server problem while updating your Newsletter's name"
+          );
+        }
       } else {
-        // error message here
+        toast("Name must not be empty");
       }
     } catch (error) {
       console.log("error", error);
+      toast("An error happended while updating the Newsletter's name");
     } finally {
       setNewsletterName("");
-      //setIsLoading(false);
     }
   };
 
