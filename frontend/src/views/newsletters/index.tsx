@@ -1,17 +1,20 @@
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import {
-  TableContainer,
-  useTheme,
+  CircularProgress,
+  IconButton,
   Table,
-  TableHead,
   TableBody,
-  TableRow,
   TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import PageTemplate from "src/components/PageTemplate";
 import {
   NewsletterApi,
-  NewslettersDelete200Response,
   NewslettersDelete200ResponseNewslettersInner,
 } from "src/core/API";
 
@@ -19,13 +22,16 @@ function Newsletters() {
   const [newsletters, setNewsletters] = useState<
     NewslettersDelete200ResponseNewslettersInner[]
   >([{ createdAt: "", id: 1, name: "", updatedAt: "" }]);
-  const theme = useTheme();
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const NewslettersAPI = new NewsletterApi();
 
   const fetchNewsletters = async () => {
     try {
+      setIsLoading(true);
       const newsletters = await NewslettersAPI.newslettersGet();
-      console.log("le appi", newsletters);
       if (newsletters.status === 200) {
         setNewsletters(newsletters.data.newsletters);
       } else {
@@ -33,8 +39,33 @@ function Newsletters() {
       }
     } catch (error) {
       console.log("error", error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const openCreateDialog = async () => {
+    setIsCreateOpen(true);
+  };
+
+  const closeCreateDialog = async () => {
+    setIsCreateOpen(false);
+    fetchNewsletters()
+      .then((success) => {})
+      .catch((err) => {});
+  };
+
+  const openUpdateDialog = async () => {
+    setIsUpdateOpen(true);
+  };
+
+  const closeUpdateDialog = async () => {
+    setIsUpdateOpen(false);
+    fetchNewsletters()
+      .then((success) => {})
+      .catch((err) => {});
+  };
+
   useEffect(() => {
     fetchNewsletters();
   }, []);
@@ -46,6 +77,9 @@ function Newsletters() {
       }
       headerTitle={"Newsletters"}
       pageTitle={"Newsletters"}
+      headerAction={() => {
+        openCreateDialog();
+      }}
     >
       <TableContainer>
         <Table>
@@ -56,14 +90,29 @@ function Newsletters() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {newsletters.map((newsletter) => {
-              return (
-                <TableRow key={newsletter.id}>
-                  <TableCell>{newsletter.name}</TableCell>
-                  <TableCell align="center">0</TableCell>
-                </TableRow>
-              );
-            })}
+            {!isLoading ? (
+              newsletters.map((newsletter) => {
+                return (
+                  <TableRow key={newsletter.id}>
+                    <TableCell>{newsletter.name}</TableCell>
+                    <TableCell align="center">
+                      <Tooltip title="Edit Newsletter's Name" arrow>
+                        <IconButton size="small">
+                          <EditTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete Newsletter" arrow>
+                        <IconButton size="small">
+                          <DeleteTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <CircularProgress />
+            )}
           </TableBody>
         </Table>
       </TableContainer>

@@ -7,6 +7,7 @@ import Footer from "src/components/Footer";
 function PageTemplate({
   children,
   headerActionName,
+  headerAction,
   headerDescription,
   headerTitle,
   pageTitle,
@@ -21,6 +22,7 @@ function PageTemplate({
           headerActionName={headerActionName}
           headerDescription={headerDescription}
           headerTitle={headerTitle}
+          headerAction={headerAction}
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">

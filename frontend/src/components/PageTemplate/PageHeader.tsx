@@ -2,7 +2,12 @@ import { Typography, Button, Grid } from "@mui/material";
 
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
 
-function PageHeader({ headerTitle, headerDescription, headerActionName }) {
+function PageHeader({
+  headerTitle,
+  headerDescription,
+  headerActionName,
+  headerAction,
+}) {
   const user = {
     name: "Catherine Pike",
     avatar: "/static/images/avatars/1.jpg",
@@ -20,6 +25,9 @@ function PageHeader({ headerTitle, headerDescription, headerActionName }) {
           sx={{ mt: { xs: 2, md: 0 } }}
           variant="contained"
           startIcon={<AddTwoToneIcon fontSize="small" />}
+          onClick={() => {
+            headerAction();
+          }}
         >
           {headerActionName}
         </Button>
