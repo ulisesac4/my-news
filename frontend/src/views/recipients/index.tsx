@@ -2,6 +2,7 @@ import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import {
   CircularProgress,
+  Divider,
   IconButton,
   Table,
   TableBody,
@@ -10,9 +11,17 @@ import {
   TableHead,
   TableRow,
   Tooltip,
+  Card,
+  CardHeader,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import NewsletterSelect from "src/components/NewsletterSelect";
 import PageTemplate from "src/components/PageTemplate";
 import {
   RecipientsDelete200ResponseRecipients,
@@ -91,41 +100,53 @@ function Recipients() {
         openCreateDialog();
       }}
     >
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!isLoading ? (
-              recipients.map((recipient) => {
-                return (
-                  <TableRow key={recipient.id}>
-                    <TableCell>{recipient.email}</TableCell>
-                    <TableCell align="center">
-                      <Tooltip title="Delete Recipient" arrow>
-                        <IconButton
-                          size="small"
-                          onClick={async () => {
-                            await destroyRecipient(recipient.id);
-                          }}
-                        >
-                          <DeleteTwoToneIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <CircularProgress />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Card>
+        <CardHeader
+          action={
+            <Box width={150}>
+              <NewsletterSelect></NewsletterSelect>
+            </Box>
+          }
+          title="Recent Orders"
+        />
+
+        <Divider />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="center">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {!isLoading ? (
+                recipients.map((recipient) => {
+                  return (
+                    <TableRow key={recipient.id}>
+                      <TableCell>{recipient.email}</TableCell>
+                      <TableCell align="center">
+                        <Tooltip title="Delete Recipient" arrow>
+                          <IconButton
+                            size="small"
+                            onClick={async () => {
+                              await destroyRecipient(recipient.id);
+                            }}
+                          >
+                            <DeleteTwoToneIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <CircularProgress />
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
       <CreateRecipientDialog
         open={isCreateOpen}
         onClose={() => {
