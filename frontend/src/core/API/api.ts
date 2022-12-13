@@ -668,6 +668,50 @@ export interface RecipientsDeleteRequest1 {
 /**
  * 
  * @export
+ * @interface RecipientsIdGet200Response
+ */
+export interface RecipientsIdGet200Response {
+    /**
+     * 
+     * @type {Array<RecipientsIdGet200ResponseRecipientsInner>}
+     * @memberof RecipientsIdGet200Response
+     */
+    'recipients'?: Array<RecipientsIdGet200ResponseRecipientsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface RecipientsIdGet200ResponseRecipientsInner
+ */
+export interface RecipientsIdGet200ResponseRecipientsInner {
+    /**
+     * The create Recipient ID.
+     * @type {number}
+     * @memberof RecipientsIdGet200ResponseRecipientsInner
+     */
+    'id'?: number;
+    /**
+     * The Recipient\'s email.
+     * @type {string}
+     * @memberof RecipientsIdGet200ResponseRecipientsInner
+     */
+    'email'?: string;
+    /**
+     * The Recipient\'s created hour in iso format.
+     * @type {string}
+     * @memberof RecipientsIdGet200ResponseRecipientsInner
+     */
+    'createdAt'?: string;
+    /**
+     * The Recipient\'s updated hour in iso format.
+     * @type {string}
+     * @memberof RecipientsIdGet200ResponseRecipientsInner
+     */
+    'updatedAt'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TemplatesDelete200Response
  */
 export interface TemplatesDelete200Response {
@@ -1697,7 +1741,7 @@ export const RecipientApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async recipientsIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecipientsDelete200Response>> {
+        async recipientsIdGet(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecipientsIdGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.recipientsIdGet(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1736,7 +1780,7 @@ export const RecipientApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        recipientsIdGet(id: number, options?: any): AxiosPromise<RecipientsDelete200Response> {
+        recipientsIdGet(id: number, options?: any): AxiosPromise<RecipientsIdGet200Response> {
             return localVarFp.recipientsIdGet(id, options).then((request) => request(axios, basePath));
         },
         /**

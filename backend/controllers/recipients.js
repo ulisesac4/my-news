@@ -148,24 +148,25 @@ module.exports = {
    *               type: object
    *               properties:
    *                 recipients:
-   *                   type: object
-   *                   properties:
-   *                    id:
-   *                     type: integer
-   *                     description: The create Recipient ID.
-   *                     example: 1
-   *                    email:
-   *                     type: string
-   *                     description: The Recipient's email.
-   *                     example: one-mail@gmail.com
-   *                    createdAt:
-   *                     type: string
-   *                     description: The Recipient's created hour in iso format.
-   *                     example: 2022-12-06T00:53:42Z
-   *                    updatedAt:
-   *                     type: string
-   *                     description: The Recipient's updated hour in iso format.
-   *                     example: 2022-12-06T00:53:42Z
+   *                   type: array
+   *                   items:
+   *                     properties:
+   *                      id:
+   *                       type: integer
+   *                       description: The create Recipient ID.
+   *                       example: 1
+   *                      email:
+   *                       type: string
+   *                       description: The Recipient's email.
+   *                       example: one-mail@gmail.com
+   *                      createdAt:
+   *                       type: string
+   *                       description: The Recipient's created hour in iso format.
+   *                       example: 2022-12-06T00:53:42Z
+   *                      updatedAt:
+   *                       type: string
+   *                       description: The Recipient's updated hour in iso format.
+   *                       example: 2022-12-06T00:53:42Z
    *       400:
    *         description: An error has ocurred
    *         content:

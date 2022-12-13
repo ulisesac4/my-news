@@ -1,0 +1,139 @@
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+import {
+  CircularProgress,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import PageTemplate from "src/components/PageTemplate";
+import {
+  RecipientsDelete200ResponseRecipients,
+  RecipientApi,
+} from "src/core/API";
+import CreateRecipientDialog from "./createRecipientDialog";
+
+function Recipients() {
+  const [recipients, setRecipients] = useState<
+    RecipientsDelete200ResponseRecipients[]
+  >([{ createdAt: "", id: 1, email: "", updatedAt: "" }]);
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const RecipientsAPI = new RecipientApi();
+
+  const fetchRecipients = async () => {
+    try {
+      setIsLoading(true);
+      const recipients = await RecipientsAPI.recipientsIdGet(2);
+      if (recipients.status === 200) {
+        setRecipients(recipients.data.recipients);
+      } else {
+        // error message here
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const openCreateDialog = async () => {
+    setIsCreateOpen(true);
+  };
+
+  const closeCreateDialog = async () => {
+    setIsCreateOpen(false);
+    fetchRecipients()
+      .then((success) => {})
+      .catch((err) => {});
+  };
+
+  const destroyRecipient = async (id) => {
+    try {
+      setIsLoading(true);
+      const recipients = await RecipientsAPI.recipientsDelete({ id });
+      if (recipients.status === 200) {
+      } else {
+        toast("Your Recipient have been deleted successfully");
+      }
+      fetchRecipients()
+        .then((success) => {})
+        .catch((err) => {});
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecipients();
+  }, []);
+  return (
+    <PageTemplate
+      headerActionName={"Create Recipient"}
+      headerDescription={
+        "This where you check the names of the recipients you have"
+      }
+      headerTitle={"Recipients"}
+      pageTitle={"Recipients"}
+      headerAction={() => {
+        openCreateDialog();
+      }}
+    >
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell align="center">Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {!isLoading ? (
+              recipients.map((recipient) => {
+                return (
+                  <TableRow key={recipient.id}>
+                    <TableCell>{recipient.email}</TableCell>
+                    <TableCell align="center">
+                      <Tooltip title="Delete Recipient" arrow>
+                        <IconButton
+                          size="small"
+                          onClick={async () => {
+                            await destroyRecipient(recipient.id);
+                          }}
+                        >
+                          <DeleteTwoToneIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <CircularProgress />
+            )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <CreateRecipientDialog
+        open={isCreateOpen}
+        onClose={() => {
+          closeCreateDialog();
+        }}
+      />
+    </PageTemplate>
+  );
+}
+
+export default Recipients;

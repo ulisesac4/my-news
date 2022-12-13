@@ -32,6 +32,7 @@ const Transactions = Loader(
 );
 const Newsletters = Loader(lazy(() => import("src/views/newsletters")));
 const Templates = Loader(lazy(() => import("src/views/templates")));
+const Recipients = Loader(lazy(() => import("src/views/recipients")));
 const UserProfile = Loader(
   lazy(() => import("src/content/applications/Users/profile"))
 );
@@ -159,6 +160,10 @@ const routes: RouteObject[] = [
       {
         path: "templates",
         element: <Templates />,
+      },
+      {
+        path: "recipients",
+        element: <Recipients />,
       },
       {
         path: "profile",

@@ -9,6 +9,7 @@ const options = {
       description: "Example of CRUD API",
       version: "1.0.0",
     },
+    servers: [{ url: "http://localhost:9876/" }],
   },
 
   // looks for configuration in specified directories
