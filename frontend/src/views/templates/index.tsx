@@ -15,30 +15,30 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import PageTemplate from "src/components/PageTemplate";
 import {
-  NewsletterApi,
-  NewslettersDelete200ResponseNewslettersInner,
+  TemplatesDelete200ResponseTemplatesInner,
+  TemplateApi,
 } from "src/core/API";
-import CreateNewsletterDialog from "./createNewsletterDialog";
-import UpdateNewsletterDialog from "./updateNewsletterDialog";
+import CreateTemplateDialog from "./createTemplateDialog";
+import UpdateTemplateDialog from "./updateTemplateDialog";
 
-function Newsletters() {
-  const [newsletters, setNewsletters] = useState<
-    NewslettersDelete200ResponseNewslettersInner[]
-  >([{ createdAt: "", id: 1, name: "", updatedAt: "" }]);
-  const [selectedNewsletter, setSelectedNewsletter] =
-    useState<NewslettersDelete200ResponseNewslettersInner>({});
+function Templates() {
+  const [templates, setTemplates] = useState<
+    TemplatesDelete200ResponseTemplatesInner[]
+  >([{ createdAt: "", id: 1, name: "", updatedAt: "", content: "" }]);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<TemplatesDelete200ResponseTemplatesInner>({});
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const NewslettersAPI = new NewsletterApi();
+  const TemplatesAPI = new TemplateApi();
 
-  const fetchNewsletters = async () => {
+  const fetchTemplates = async () => {
     try {
       setIsLoading(true);
-      const newsletters = await NewslettersAPI.newslettersGet();
-      if (newsletters.status === 200) {
-        setNewsletters(newsletters.data.newsletters);
+      const templates = await TemplatesAPI.templatesGet();
+      if (templates.status === 200) {
+        setTemplates(templates.data.templates);
       } else {
         // error message here
       }
@@ -55,7 +55,7 @@ function Newsletters() {
 
   const closeCreateDialog = async () => {
     setIsCreateOpen(false);
-    fetchNewsletters()
+    fetchTemplates()
       .then((success) => {})
       .catch((err) => {});
   };
@@ -65,22 +65,22 @@ function Newsletters() {
   };
 
   const closeUpdateDialog = async () => {
-    setSelectedNewsletter({});
+    setSelectedTemplate({});
     setIsUpdateOpen(false);
-    fetchNewsletters()
+    fetchTemplates()
       .then((success) => {})
       .catch((err) => {});
   };
 
-  const destroyNewsletter = async (id) => {
+  const destroyTemplate = async (id) => {
     try {
       setIsLoading(true);
-      const newsletters = await NewslettersAPI.newslettersDelete({ id });
-      if (newsletters.status === 200) {
+      const templates = await TemplatesAPI.templatesDelete({ id });
+      if (templates.status === 200) {
       } else {
-        toast("Your Newsletter have been deleted successfully");
+        toast("Your Template have been deleted successfully");
       }
-      fetchNewsletters()
+      fetchTemplates()
         .then((success) => {})
         .catch((err) => {});
     } catch (error) {
@@ -91,16 +91,16 @@ function Newsletters() {
   };
 
   useEffect(() => {
-    fetchNewsletters();
+    fetchTemplates();
   }, []);
   return (
     <PageTemplate
-      headerActionName={"Create Newsletter"}
+      headerActionName={"Create Template"}
       headerDescription={
-        "This where you check the names of the newsletters you have"
+        "This where you check the names of the templates you have"
       }
-      headerTitle={"Newsletters"}
-      pageTitle={"Newsletters"}
+      headerTitle={"Templates"}
+      pageTitle={"Templates"}
       headerAction={() => {
         openCreateDialog();
       }}
@@ -115,27 +115,27 @@ function Newsletters() {
           </TableHead>
           <TableBody>
             {!isLoading ? (
-              newsletters.map((newsletter) => {
+              templates.map((newsletter) => {
                 return (
                   <TableRow key={newsletter.id}>
                     <TableCell>{newsletter.name}</TableCell>
                     <TableCell align="center">
-                      <Tooltip title="Edit Newsletter's Name" arrow>
+                      <Tooltip title="Edit Template's Name" arrow>
                         <IconButton
                           size="small"
                           onClick={async () => {
-                            setSelectedNewsletter(newsletter);
+                            setSelectedTemplate(newsletter);
                             openUpdateDialog();
                           }}
                         >
                           <EditTwoToneIcon fontSize="small" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Delete Newsletter" arrow>
+                      <Tooltip title="Delete Template" arrow>
                         <IconButton
                           size="small"
                           onClick={async () => {
-                            await destroyNewsletter(newsletter.id);
+                            await destroyTemplate(newsletter.id);
                           }}
                         >
                           <DeleteTwoToneIcon fontSize="small" />
@@ -151,22 +151,22 @@ function Newsletters() {
           </TableBody>
         </Table>
       </TableContainer>
-      <CreateNewsletterDialog
+      <CreateTemplateDialog
         open={isCreateOpen}
         onClose={() => {
           closeCreateDialog();
         }}
       />
-      <UpdateNewsletterDialog
+      <UpdateTemplateDialog
         open={isUpdateOpen}
         onClose={() => {
           closeUpdateDialog();
         }}
-        newsletterId={selectedNewsletter.id}
-        oldNewsletterName={selectedNewsletter.name}
+        newsletterId={selectedTemplate.id}
+        oldNewsletterName={selectedTemplate.name}
       />
     </PageTemplate>
   );
 }
 
-export default Newsletters;
+export default Templates;
