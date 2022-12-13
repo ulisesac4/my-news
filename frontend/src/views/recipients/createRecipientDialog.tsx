@@ -11,38 +11,42 @@ import {
 } from "@mui/material";
 import { useState, ChangeEvent } from "react";
 import { toast } from "react-toastify";
-import { TemplateApi } from "src/core/API";
+import NewsletterSelect from "src/components/NewsletterSelect";
+import { NewsletterApi, RecipientApi } from "src/core/API";
 
 function CreateRecipientDialog({ open, onClose }) {
-  const TemplatesAPI = new TemplateApi();
-  const [templateName, setTemplateName] = useState("");
-  const [templateContent, setTemplateContent] = useState("");
+  const RecipientsAPI = new RecipientApi();
+  const [recipientName, setRecipientName] = useState("");
+  const [newsletterId, setNewsletterId] = useState(0);
+  const [recipientContent, setRecipientContent] = useState("");
 
   const cleanElements = () => {
-    setTemplateContent("");
-    setTemplateName("");
+    setRecipientContent("");
+    setRecipientName("");
   };
 
-  const createTemplate = async () => {
+  const createRecipient = async () => {
     try {
-      if (templateName && templateContent) {
-        const templates = await TemplatesAPI.templatesPost({
-          name: templateName,
-          content: templateContent,
+      if (newsletterId && recipientContent) {
+        const recipients = await RecipientsAPI.recipientsPost({
+          emails: recipientContent.split(" ").map((emailElement) => {
+            return emailElement;
+          }),
+          newsletterId: newsletterId.toString(),
         });
-        if (templates.status === 200) {
-          toast("Template have been created successfully");
+        if (recipients.status === 200) {
+          toast("Recipient have been created successfully");
           onClose();
         } else {
-          console.log("error", templates.statusText);
-          toast("There was server problem while creating your Template");
+          console.log("error", recipients.statusText);
+          toast("There was server problem while creating your Recipient");
         }
       } else {
-        toast("Name and Content must not be empty");
+        toast("Emails and Target Newsletter must not be empty");
       }
     } catch (error) {
       console.log("error", error);
-      toast("An error happended while creating the Template's name");
+      toast("An error happended while creating the Recipient's name");
     } finally {
       cleanElements();
     }
@@ -56,35 +60,26 @@ function CreateRecipientDialog({ open, onClose }) {
         onClose();
       }}
     >
-      <DialogTitle>Create a Template</DialogTitle>
+      <DialogTitle>Create Recipients</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Add a template that will be usable to any Newsletter Issue.
+          You can write here your new emails separated by a space or load a file
+          with the emails separated by a new line.
         </DialogContentText>
-        <TextField
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Your new Template's name"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={templateName}
-          onChange={(event) => {
-            setTemplateName(event.target.value);
-          }}
-        />
+
         <div>
           <TextField
             autoFocus
             margin="dense"
             id="content"
-            label="Your new Template's content"
+            label="Your new Recipients"
             type="text"
             fullWidth
             variant="standard"
-            disabled
-            value={templateContent}
+            onChange={(event) => {
+              setRecipientContent(event.target.value);
+            }}
+            value={recipientContent}
             InputProps={{
               endAdornment: (
                 <IconButton
@@ -100,7 +95,12 @@ function CreateRecipientDialog({ open, onClose }) {
                       const reader = new FileReader();
                       reader.onload = async (e) => {
                         let text = e.target.result.toString();
-                        setTemplateContent(text.slice(1, text.length - 1));
+                        setRecipientContent(
+                          text
+                            .slice(1, text.length - 1)
+                            .split("\n")
+                            .join(" ")
+                        );
                       };
                       reader.readAsText(event.target.files[0]);
                     }}
@@ -111,6 +111,15 @@ function CreateRecipientDialog({ open, onClose }) {
             }}
           />
         </div>
+        <br />
+
+        <NewsletterSelect
+          onSelectNewsletter={async (value) => {
+            console.log("when update", value);
+            setNewsletterId(value);
+            //await fetchRecipients();
+          }}
+        />
       </DialogContent>
       <DialogActions>
         <Button
@@ -122,7 +131,7 @@ function CreateRecipientDialog({ open, onClose }) {
         </Button>
         <Button
           onClick={async () => {
-            await createTemplate();
+            await createRecipient();
           }}
         >
           Create

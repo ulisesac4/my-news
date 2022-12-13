@@ -14,8 +14,9 @@ module.exports = async (emails, NewsletterId) => {
       where: { email: recipientElement.email },
     });
     if (!recipient) {
-      recipient = await Recipient.create({ email: recipient.email });
+      recipient = await Recipient.create({ email: recipientElement.email });
     }
+
     await newsletter.addRecipient(recipient);
     return recipient;
   });
