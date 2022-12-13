@@ -26,10 +26,11 @@ function UpdateTemplateDialog({
 
   const updateTemplateName = async () => {
     try {
-      if (templateName) {
+      if (templateName && templateContent) {
         const templates = await TemplatesAPI.templatesPatch({
           id: templateId,
           name: templateName,
+          content: templateContent,
         });
         if (templates.status === 200) {
           toast("Template updated correctly");
