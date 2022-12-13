@@ -18,12 +18,17 @@ function CreateTemplateDialog({ open, onClose }) {
   const [templateName, setTemplateName] = useState("");
   const [templateContent, setTemplateContent] = useState("");
 
+  const cleanElements = () => {
+    setTemplateContent("");
+    setTemplateName("");
+  };
+
   const createTemplate = async () => {
     try {
-      if (templateName) {
+      if (templateName && templateContent) {
         const templates = await TemplatesAPI.templatesPost({
           name: templateName,
-          content: "",
+          content: templateContent,
         });
         if (templates.status === 200) {
           toast("Template have been created successfully");
@@ -33,13 +38,13 @@ function CreateTemplateDialog({ open, onClose }) {
           toast("There was server problem while creating your Template");
         }
       } else {
-        toast("Name must not be empty");
+        toast("Name and Content must not be empty");
       }
     } catch (error) {
       console.log("error", error);
       toast("An error happended while creating the Template's name");
     } finally {
-      setTemplateName("");
+      cleanElements();
     }
   };
 
@@ -47,7 +52,7 @@ function CreateTemplateDialog({ open, onClose }) {
     <Dialog
       open={open}
       onClose={() => {
-        setTemplateName("");
+        cleanElements();
         onClose();
       }}
     >
@@ -80,27 +85,31 @@ function CreateTemplateDialog({ open, onClose }) {
             variant="standard"
             disabled
             value={templateContent}
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="label"
+                >
+                  <input
+                    hidden
+                    type="file"
+                    onChange={(event) => {
+                      event.preventDefault();
+                      const reader = new FileReader();
+                      reader.onload = async (e) => {
+                        let text = e.target.result.toString();
+                        setTemplateContent(text);
+                      };
+                      reader.readAsText(event.target.files[0]);
+                    }}
+                  />
+                  <AddCircleRounded />
+                </IconButton>
+              ),
+            }}
           />
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="label"
-          >
-            <input
-              hidden
-              type="file"
-              onChange={(event) => {
-                event.preventDefault();
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                  let text = e.target.result.toString();
-                  setTemplateContent(text);
-                };
-                reader.readAsText(event.target.files[0]);
-              }}
-            />
-            <AddCircleRounded />
-          </IconButton>
         </div>
       </DialogContent>
       <DialogActions>
