@@ -107,7 +107,7 @@ function UpdateTemplateDialog({
                       const reader = new FileReader();
                       reader.onload = async (e) => {
                         let text = e.target.result.toString();
-                        setTemplateContent(text);
+                        setTemplateContent(text.slice(1, text.length - 1));
                       };
                       reader.readAsText(event.target.files[0]);
                     }}
