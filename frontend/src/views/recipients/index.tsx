@@ -33,6 +33,7 @@ function Recipients() {
   const [recipients, setRecipients] = useState<
     RecipientsDelete200ResponseRecipients[]
   >([{ createdAt: "", id: 1, email: "", updatedAt: "" }]);
+  const [newsletterId, setNewsletterId] = useState(0);
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
@@ -43,7 +44,7 @@ function Recipients() {
   const fetchRecipients = async () => {
     try {
       setIsLoading(true);
-      const recipients = await RecipientsAPI.recipientsIdGet(2);
+      const recipients = await RecipientsAPI.recipientsIdGet(newsletterId);
       if (recipients.status === 200) {
         setRecipients(recipients.data.recipients);
       } else {
@@ -87,7 +88,7 @@ function Recipients() {
 
   useEffect(() => {
     fetchRecipients();
-  }, []);
+  }, [newsletterId]);
   return (
     <PageTemplate
       headerActionName={"Create Recipient"}
@@ -104,7 +105,13 @@ function Recipients() {
         <CardHeader
           action={
             <Box width={150}>
-              <NewsletterSelect></NewsletterSelect>
+              <NewsletterSelect
+                onSelectNewsletter={async (value) => {
+                  console.log("when update", value);
+                  setNewsletterId(value);
+                  await fetchRecipients();
+                }}
+              ></NewsletterSelect>
             </Box>
           }
           title="Recent Orders"
@@ -121,25 +128,31 @@ function Recipients() {
             </TableHead>
             <TableBody>
               {!isLoading ? (
-                recipients.map((recipient) => {
-                  return (
-                    <TableRow key={recipient.id}>
-                      <TableCell>{recipient.email}</TableCell>
-                      <TableCell align="center">
-                        <Tooltip title="Delete Recipient" arrow>
-                          <IconButton
-                            size="small"
-                            onClick={async () => {
-                              await destroyRecipient(recipient.id);
-                            }}
-                          >
-                            <DeleteTwoToneIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
+                recipients.length ? (
+                  recipients.map((recipient) => {
+                    return (
+                      <TableRow key={recipient.id}>
+                        <TableCell>{recipient.email}</TableCell>
+                        <TableCell align="center">
+                          <Tooltip title="Delete Recipient" arrow>
+                            <IconButton
+                              size="small"
+                              onClick={async () => {
+                                await destroyRecipient(recipient.id);
+                              }}
+                            >
+                              <DeleteTwoToneIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={6}>no records found</TableCell>{" "}
+                  </TableRow>
+                )
               ) : (
                 <CircularProgress />
               )}

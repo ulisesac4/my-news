@@ -7,14 +7,18 @@ import {
   NewslettersDelete200ResponseNewslettersInner,
 } from "src/core/API";
 
-const NewsletterSelect = () => {
+const NewsletterSelect = ({ onSelectNewsletter }) => {
   const NewslettersAPI = new NewsletterApi();
+  const [newsletterValue, setNewsletterValue] = useState(0);
   const [newsletters, setNewsletters] = useState<
     NewslettersDelete200ResponseNewslettersInner[]
-  >([{ createdAt: "", id: 1, name: "", updatedAt: "" }]);
+  >([{ createdAt: "", id: 0, name: "-rtnsj", updatedAt: "" }]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onChange = () => {};
+  const onChange = (value) => {
+    setNewsletterValue(value.target.value);
+    onSelectNewsletter(value.target.value);
+  };
 
   const fetchNewsletters = async () => {
     try {
@@ -22,6 +26,10 @@ const NewsletterSelect = () => {
       const newsletters = await NewslettersAPI.newslettersGet();
       if (newsletters.status === 200) {
         setNewsletters(newsletters.data.newsletters);
+        try {
+          setNewsletterValue(newsletters.data.newsletters[0].id);
+          onSelectNewsletter(newsletters.data.newsletters[0].id);
+        } catch (error) {}
       } else {
         // error message here
       }
@@ -38,7 +46,12 @@ const NewsletterSelect = () => {
   return (
     <FormControl fullWidth variant="outlined">
       <InputLabel>Newsletter</InputLabel>
-      <Select onChange={onChange} label="Status" autoWidth>
+      <Select
+        onChange={onChange}
+        label="Status"
+        autoWidth
+        value={newsletterValue}
+      >
         {newsletters.map((statusOption) => (
           <MenuItem key={statusOption.id} value={statusOption.id}>
             {statusOption.name}
