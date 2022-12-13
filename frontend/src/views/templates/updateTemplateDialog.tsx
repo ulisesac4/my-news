@@ -1,38 +1,42 @@
+import AddCircleRounded from "@mui/icons-material/AddCircleRounded";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
+  IconButton,
   DialogTitle,
   TextField,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { NewsletterApi } from "src/core/API";
+import { TemplateApi } from "src/core/API";
 
-function UpdateNewsletterDialog({
+function UpdateTemplateDialog({
   open,
   onClose,
-  newsletterId,
-  oldNewsletterName,
+  templateId,
+  oldTemplateName,
+  oldTemplateContent,
 }) {
-  const NewslettersAPI = new NewsletterApi();
-  const [newsletterName, setNewsletterName] = useState(oldNewsletterName);
+  const TemplatesAPI = new TemplateApi();
+  const [templateName, setTemplateName] = useState(oldTemplateName);
+  const [templateContent, setTemplateContent] = useState(oldTemplateContent);
 
-  const updateNewsletterName = async () => {
+  const updateTemplateName = async () => {
     try {
-      if (newsletterName) {
-        const newsletters = await NewslettersAPI.newslettersPatch({
-          id: newsletterId,
-          name: newsletterName,
+      if (templateName) {
+        const templates = await TemplatesAPI.templatesPatch({
+          id: templateId,
+          name: templateName,
         });
-        if (newsletters.status === 200) {
-          toast("Newsletter updated correctly");
+        if (templates.status === 200) {
+          toast("Template updated correctly");
 
           onClose();
         } else {
-          console.log("error", newsletters.statusText);
+          console.log("error", templates.statusText);
           toast("An error in the server ocurred, try again later");
         }
       } else {
@@ -42,13 +46,14 @@ function UpdateNewsletterDialog({
       console.log("error", error);
       toast("An error happened while updating the name");
     } finally {
-      setNewsletterName("");
+      setTemplateName("");
     }
   };
 
   useEffect(() => {
-    setNewsletterName(oldNewsletterName);
-  }, [oldNewsletterName]);
+    setTemplateName(oldTemplateName);
+    setTemplateContent(oldTemplateContent);
+  }, [oldTemplateName, oldTemplateContent]);
 
   return (
     <Dialog
@@ -57,24 +62,61 @@ function UpdateNewsletterDialog({
       }}
       open={open}
     >
-      <DialogTitle>Edit the name of a Newsletter</DialogTitle>
+      <DialogTitle>Edit the name of a Template</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          You can edit the name of your Newsletter here
+          You can edit the name and content of your Template here
         </DialogContentText>
         <TextField
           autoFocus
           margin="dense"
           id="name"
-          label="Your new Newsletter's name"
+          label="Your new Template's name"
           type="text"
           fullWidth
           variant="standard"
-          value={newsletterName}
+          value={templateName}
           onChange={(event) => {
-            setNewsletterName(event.target.value);
+            setTemplateName(event.target.value);
           }}
         />
+        <div>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="content"
+            label="Your new Template's content"
+            type="text"
+            fullWidth
+            variant="standard"
+            disabled
+            value={templateContent}
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="label"
+                >
+                  <input
+                    hidden
+                    type="file"
+                    onChange={(event) => {
+                      event.preventDefault();
+                      const reader = new FileReader();
+                      reader.onload = async (e) => {
+                        let text = e.target.result.toString();
+                        setTemplateContent(text);
+                      };
+                      reader.readAsText(event.target.files[0]);
+                    }}
+                  />
+                  <AddCircleRounded />
+                </IconButton>
+              ),
+            }}
+          />
+        </div>
       </DialogContent>
       <DialogActions>
         <Button
@@ -86,7 +128,7 @@ function UpdateNewsletterDialog({
         </Button>
         <Button
           onClick={async () => {
-            await updateNewsletterName();
+            await updateTemplateName();
           }}
         >
           Edit
@@ -96,4 +138,4 @@ function UpdateNewsletterDialog({
   );
 }
 
-export default UpdateNewsletterDialog;
+export default UpdateTemplateDialog;

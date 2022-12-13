@@ -162,8 +162,9 @@ function Templates() {
         onClose={() => {
           closeUpdateDialog();
         }}
-        newsletterId={selectedTemplate.id}
-        oldNewsletterName={selectedTemplate.name}
+        templateId={selectedTemplate.id}
+        oldTemplateName={selectedTemplate.name}
+        oldTemplateContent={selectedTemplate.content}
       />
     </PageTemplate>
   );
