@@ -91,6 +91,10 @@ module.exports = {
    *                 type: string
    *                 description: The Recipient's id.
    *                 example: 2
+   *               newsletterId:
+   *                 description: The id of the Newsletter where these recipients will be put at.
+   *                 type: string
+   *                 example: 1
    *             required:
    *               - id
    *     responses:
@@ -114,9 +118,9 @@ module.exports = {
    *               example: name is invalid
    */
   destroy: async (req, res) => {
-    const { id } = req.body;
+    const { id, newsletterId } = req.body;
     try {
-      const rowsDeleted = await RecipientService.destroy(id);
+      const rowsDeleted = await RecipientService.destroy(id, newsletterId);
       res.json({ rowsDeleted });
     } catch (error) {
       console.error("[Error] destroy recipient", error);

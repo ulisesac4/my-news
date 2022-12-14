@@ -664,6 +664,12 @@ export interface RecipientsDeleteRequest1 {
      * @memberof RecipientsDeleteRequest1
      */
     'id': string;
+    /**
+     * The id of the Newsletter where these recipients will be put at.
+     * @type {string}
+     * @memberof RecipientsDeleteRequest1
+     */
+    'newsletterId'?: string;
 }
 /**
  * 

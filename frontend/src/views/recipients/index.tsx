@@ -68,10 +68,13 @@ function Recipients() {
       .catch((err) => {});
   };
 
-  const destroyRecipient = async (id) => {
+  const destroyRecipient = async (id, newsletterId) => {
     try {
       setIsLoading(true);
-      const recipients = await RecipientsAPI.recipientsDelete({ id });
+      const recipients = await RecipientsAPI.recipientsDelete({
+        id,
+        newsletterId,
+      });
       if (recipients.status === 200) {
       } else {
         toast("Your Recipient have been deleted successfully");
@@ -138,7 +141,10 @@ function Recipients() {
                             <IconButton
                               size="small"
                               onClick={async () => {
-                                await destroyRecipient(recipient.id);
+                                await destroyRecipient(
+                                  recipient.id,
+                                  newsletterId
+                                );
                               }}
                             >
                               <DeleteTwoToneIcon fontSize="small" />
