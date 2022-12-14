@@ -31,6 +31,12 @@ import ChromeReaderModeTwoToneIcon from "@mui/icons-material/ChromeReaderModeTwo
 import WorkspacePremiumTwoToneIcon from "@mui/icons-material/WorkspacePremiumTwoTone";
 import CameraFrontTwoToneIcon from "@mui/icons-material/CameraFrontTwoTone";
 import DisplaySettingsTwoToneIcon from "@mui/icons-material/DisplaySettingsTwoTone";
+import {
+  AlternateEmail,
+  Class,
+  InsertDriveFile,
+  Mail,
+} from "@mui/icons-material";
 
 const MenuWrapper = styled(Box)(
   ({ theme }) => `
@@ -228,8 +234,23 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
+                  to="/management/issues"
+                  startIcon={<Mail />}
+                >
+                  Issues
+                </Button>
+              </ListItem>
+            </List>
+          </SubMenuWrapper>
+          <SubMenuWrapper>
+            <List component="div">
+              <ListItem component="div">
+                <Button
+                  disableRipple
+                  component={RouterLink}
+                  onClick={closeSidebar}
                   to="/management/newsletters"
-                  startIcon={<TableChartTwoToneIcon />}
+                  startIcon={<Class />}
                 >
                   Newsletters
                 </Button>
@@ -244,7 +265,7 @@ function SidebarMenu() {
                   component={RouterLink}
                   onClick={closeSidebar}
                   to="/management/templates"
-                  startIcon={<TableChartTwoToneIcon />}
+                  startIcon={<InsertDriveFile />}
                 >
                   Templates
                 </Button>
@@ -259,7 +280,7 @@ function SidebarMenu() {
                   component={RouterLink}
                   onClick={closeSidebar}
                   to="/management/recipients"
-                  startIcon={<TableChartTwoToneIcon />}
+                  startIcon={<AlternateEmail />}
                 >
                   Recipients
                 </Button>
