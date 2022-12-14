@@ -10,6 +10,9 @@ import {
   TableHead,
   TableRow,
   Tooltip,
+  Card,
+  CardHeader,
+  Divider,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -105,52 +108,58 @@ function Newsletters() {
         openCreateDialog();
       }}
     >
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!isLoading ? (
-              newsletters.map((newsletter) => {
-                return (
-                  <TableRow key={newsletter.id}>
-                    <TableCell>{newsletter.name}</TableCell>
-                    <TableCell align="center">
-                      <Tooltip title="Edit Newsletter's Name" arrow>
-                        <IconButton
-                          size="small"
-                          onClick={async () => {
-                            setSelectedNewsletter(newsletter);
-                            openUpdateDialog();
-                          }}
-                        >
-                          <EditTwoToneIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Newsletter" arrow>
-                        <IconButton
-                          size="small"
-                          onClick={async () => {
-                            await destroyNewsletter(newsletter.id);
-                          }}
-                        >
-                          <DeleteTwoToneIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <CircularProgress />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {" "}
+      <Card>
+        <CardHeader title="Your Newsletters" />
+
+        <Divider />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="center">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {!isLoading ? (
+                newsletters.map((newsletter) => {
+                  return (
+                    <TableRow key={newsletter.id}>
+                      <TableCell>{newsletter.name}</TableCell>
+                      <TableCell align="center">
+                        <Tooltip title="Edit Newsletter's Name" arrow>
+                          <IconButton
+                            size="small"
+                            onClick={async () => {
+                              setSelectedNewsletter(newsletter);
+                              openUpdateDialog();
+                            }}
+                          >
+                            <EditTwoToneIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete Newsletter" arrow>
+                          <IconButton
+                            size="small"
+                            onClick={async () => {
+                              await destroyNewsletter(newsletter.id);
+                            }}
+                          >
+                            <DeleteTwoToneIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <CircularProgress />
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
       <CreateNewsletterDialog
         open={isCreateOpen}
         onClose={() => {

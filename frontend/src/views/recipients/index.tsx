@@ -96,7 +96,7 @@ function Recipients() {
     <PageTemplate
       headerActionName={"Create Recipient"}
       headerDescription={
-        "This where you check the names of the recipients you have"
+        "This where you check the recipients you have per newsletter"
       }
       headerTitle={"Recipients"}
       pageTitle={"Recipients"}

@@ -10,6 +10,9 @@ import {
   TableHead,
   TableRow,
   Tooltip,
+  Divider,
+  Card,
+  CardHeader,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -96,61 +99,64 @@ function Templates() {
   return (
     <PageTemplate
       headerActionName={"Create Template"}
-      headerDescription={
-        "This where you check the names of the templates you have"
-      }
+      headerDescription={"This where you check your templates"}
       headerTitle={"Templates"}
       pageTitle={"Templates"}
       headerAction={() => {
         openCreateDialog();
       }}
     >
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell align="center">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {!isLoading ? (
-              templates.map((newsletter) => {
-                return (
-                  <TableRow key={newsletter.id}>
-                    <TableCell>{newsletter.name}</TableCell>
-                    <TableCell align="center">
-                      <Tooltip title="Edit Template's Name" arrow>
-                        <IconButton
-                          size="small"
-                          onClick={async () => {
-                            setSelectedTemplate(newsletter);
-                            openUpdateDialog();
-                          }}
-                        >
-                          <EditTwoToneIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete Template" arrow>
-                        <IconButton
-                          size="small"
-                          onClick={async () => {
-                            await destroyTemplate(newsletter.id);
-                          }}
-                        >
-                          <DeleteTwoToneIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <CircularProgress />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Card>
+        <CardHeader title="Your Templates" />
+
+        <Divider />
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell align="center">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {!isLoading ? (
+                templates.map((newsletter) => {
+                  return (
+                    <TableRow key={newsletter.id}>
+                      <TableCell>{newsletter.name}</TableCell>
+                      <TableCell align="center">
+                        <Tooltip title="Edit Template's Name" arrow>
+                          <IconButton
+                            size="small"
+                            onClick={async () => {
+                              setSelectedTemplate(newsletter);
+                              openUpdateDialog();
+                            }}
+                          >
+                            <EditTwoToneIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete Template" arrow>
+                          <IconButton
+                            size="small"
+                            onClick={async () => {
+                              await destroyTemplate(newsletter.id);
+                            }}
+                          >
+                            <DeleteTwoToneIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              ) : (
+                <CircularProgress />
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Card>
       <CreateTemplateDialog
         open={isCreateOpen}
         onClose={() => {
