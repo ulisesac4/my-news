@@ -5,6 +5,8 @@ import { Container, Grid } from "@mui/material";
 import Footer from "src/components/Footer";
 import PageHeader from "./PageHeader";
 import Summary from "./summary";
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import TendencyNewSubscribers from "./TendencyNewSubscribers";
 
 function DashboardCrypto() {
   return (
@@ -26,9 +28,9 @@ function DashboardCrypto() {
           <Grid item xs={12}>
             <Summary />
           </Grid>
-          <Grid item lg={8} xs={12}></Grid>
-          <Grid item lg={4} xs={12}></Grid>
-          <Grid item xs={12}></Grid>
+          <Grid item xs={12}>
+            <TendencyNewSubscribers labels={[]} data={{}} />
+          </Grid>
         </Grid>
       </Container>
       <Footer />
