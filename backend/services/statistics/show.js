@@ -21,14 +21,14 @@ module.exports = async () => {
   const data = {
     sent: { name: "To be planned", date: "To be planned" },
     amountSent: 0,
-    unsent: { name: "To be planned", date: "To be planned" },
-    amountUnset: 0,
+    unSent: { name: "To be planned", date: "To be planned" },
+    amountunSent: 0,
 
     weeks: [],
     entries: [],
   };
 
-  const unsent = await Issue.findAll({
+  const unSent = await Issue.findAll({
     where: {
       isSent: false,
     },
@@ -44,7 +44,7 @@ module.exports = async () => {
     limit: 5,
   });
 
-  const unsentCount = await Issue.findAll({
+  const unSentCount = await Issue.findAll({
     where: {
       isSent: false,
     },
@@ -58,16 +58,16 @@ module.exports = async () => {
     attributes: ["id", "isSent"],
   });
 
-  //console.log(sentCount, unsentCount, sentRows);
+  //console.log(sentCount, unSentCount, sentRows);
   data.amountSent = sentCount.length;
-  data.amountUnset = unsentCount.length;
+  data.amountunSent = unSentCount.length;
   try {
     data.sent.name = sent[0].name;
     data.sent.date = sent[0].publishDate;
   } catch (error) {}
   try {
-    data.unsent.name = unsent[0].name;
-    data.unsent.date = unsent[0].publishDate;
+    data.unSent.name = unSent[0].name;
+    data.unSent.date = unSent[0].publishDate;
   } catch (error) {}
 
   const currentDate = new Date();

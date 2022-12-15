@@ -3,41 +3,50 @@ module.exports = {
   /**
    * @openapi
    * /statistics:
-   *  get:
+   *   post:
    *     tags:
-   *     - Template
-   *     description: Show the statistics of the platform
-   *
+   *     - Statistic
+   *     description: Create an Template
    *     responses:
    *       200:
-   *         description: API has shown succesfully the details of the Template
+   *         description: API has created succesfully the Template
    *         content:
    *           application/json:
    *             schema:
    *               type: object
    *               properties:
-   *                 template:
+   *                 data:
    *                   type: object
    *                   properties:
-   *                    id:
-   *                     type: integer
-   *                     description: The create Template ID.
-   *                     example: 1
-   *                    name:
-   *                     type: string
-   *                     description: The Template's name.
-   *                     example: My-Template
-   *                    content:
-   *                     type: string
-   *                     description: The Template's html content.
-   *                    createdAt:
-   *                     type: string
-   *                     description: The Template's created hour in iso format.
-   *                     example: 2022-12-06T00:53:42Z
-   *                    updatedAt:
-   *                     type: string
-   *                     description: The Template's updated hour in iso format.
-   *                     example: 2022-12-06T00:53:42Z
+   *                     sent:
+   *                       type: object
+   *                       properties:
+   *                         name:
+   *                           type: string
+   *                         date:
+   *                           type: string
+   *                     amountSent:
+   *                       type: integer
+   *                       format: int32
+   *                     unSent:
+   *                       type: object
+   *                       properties:
+   *                         name:
+   *                           type: string
+   *                         date:
+   *                           type: string
+   *                     amountunSent:
+   *                       type: integer
+   *                       format: int32
+   *                     weeks:
+   *                       type: array
+   *                       items:
+   *                         type: string
+   *                     entries:
+   *                       type: array
+   *                       items:
+   *                         type: integer
+   *                         format: int32
    *       400:
    *         description: An error has ocurred
    *         content:
