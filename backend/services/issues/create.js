@@ -9,8 +9,8 @@ module.exports = async (
   attachments,
   publishDate,
   isSent,
-  newsletterId,
-  templateId
+  NewsletterId,
+  TemplateId
 ) => {
   attachments = AttachmentSeralizer.serialize(attachments);
   const issue = Issue.create({
@@ -19,8 +19,8 @@ module.exports = async (
     attachments: JSON.stringify(attachments),
     publishDate,
     isSent,
-    newsletterId,
-    templateId,
+    NewsletterId,
+    TemplateId,
   });
 
   hydratePending()

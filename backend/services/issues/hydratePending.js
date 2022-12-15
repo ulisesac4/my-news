@@ -1,5 +1,5 @@
 const schedule = require("node-schedule");
-const { isAfter } = require("date-fns");
+const { isAfter, formatISO } = require("date-fns");
 const Models = require("../../models");
 const getUnsentIssues = require("./getUnsentIssues");
 const send = require("./send");
@@ -19,7 +19,7 @@ module.exports = async () => {
 
   unsentIssues.forEach(async (unsentIssue) => {
     try {
-      const date = new Date(moment(unsentIssue.publishDate).toISOString());
+      const date = new Date(formatISO(unsentIssue.publishDate));
 
       if (isAfter(date, new Date())) {
         const job = schedule.scheduleJob(date, async () => {
