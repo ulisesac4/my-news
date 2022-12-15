@@ -184,11 +184,8 @@ function TendencyNewSubscribers({ labels, data }) {
                     pr: 1,
                   }}
                 >
-                  $56,475.99
+                  +{"56,475.99 "}
                 </Typography>
-                <Text color="success">
-                  <b>+12.5%</b>
-                </Text>
               </Box>
               <TrendingUpTwoToneIcon
                 sx={{

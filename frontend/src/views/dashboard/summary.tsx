@@ -98,9 +98,45 @@ function Summary() {
             </IconButton>
           }
           quantity={351}
-          quantityContext={651}
+          quantityContext="that have been sent"
           subtitle=""
-          title="561"
+          title="Total Issues"
+        />
+
+        <SummaryCard
+          icon={
+            <IconButton aria-label="delete" size="large">
+              <DeleteTwoToneIcon fontSize="inherit" />
+            </IconButton>
+          }
+          quantity="The title"
+          quantityContext="On ..."
+          subtitle=""
+          title="The last sent Issue is"
+        />
+
+        <SummaryCard
+          icon={
+            <IconButton aria-label="delete" size="large">
+              <DeleteTwoToneIcon fontSize="inherit" />
+            </IconButton>
+          }
+          quantity={351}
+          quantityContext="that haven't been sent"
+          subtitle=""
+          title="Total Issues"
+        />
+
+        <SummaryCard
+          icon={
+            <IconButton aria-label="delete" size="large">
+              <DeleteTwoToneIcon fontSize="inherit" />
+            </IconButton>
+          }
+          quantity="The title"
+          quantityContext="On ..."
+          subtitle=""
+          title="The next Issue to be sent is"
         />
       </Grid>
     </>
