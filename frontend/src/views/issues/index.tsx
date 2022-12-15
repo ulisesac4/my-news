@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Label from "src/components/Label";
 import NewsletterSelect from "src/components/NewsletterSelect";
 import PageTemplate from "src/components/PageTemplate";
 import {
@@ -111,7 +112,7 @@ function Issues() {
               ></NewsletterSelect>
             </Box>
           }
-          title="Recent Orders"
+          title="Your Issues"
         />
 
         <Divider />
@@ -120,6 +121,7 @@ function Issues() {
             <TableHead>
               <TableRow>
                 <TableCell>Name</TableCell>
+                <TableCell align="center">Status</TableCell>
                 <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -130,6 +132,11 @@ function Issues() {
                     return (
                       <TableRow key={issue.id}>
                         <TableCell>{issue.name}</TableCell>
+                        <TableCell align="center">
+                          <Label color={issue.isSent ? "success" : "error"}>
+                            {issue.isSent ? "Sent" : "Not Yet Sent"}
+                          </Label>
+                        </TableCell>
                         <TableCell align="center">
                           <Tooltip title="Delete Issue" arrow>
                             <IconButton

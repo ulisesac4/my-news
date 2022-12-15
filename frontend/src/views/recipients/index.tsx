@@ -117,7 +117,7 @@ function Recipients() {
               ></NewsletterSelect>
             </Box>
           }
-          title="Recent Orders"
+          title="Your Recipients"
         />
 
         <Divider />
