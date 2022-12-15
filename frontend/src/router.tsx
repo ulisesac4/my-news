@@ -34,6 +34,7 @@ const Newsletters = Loader(lazy(() => import("src/views/newsletters")));
 const Templates = Loader(lazy(() => import("src/views/templates")));
 const Recipients = Loader(lazy(() => import("src/views/recipients")));
 const Issues = Loader(lazy(() => import("src/views/issues")));
+const Dashboard = Loader(lazy(() => import("src/views/dashboard")));
 const UserProfile = Loader(
   lazy(() => import("src/content/applications/Users/profile"))
 );
@@ -150,9 +151,14 @@ const routes: RouteObject[] = [
         path: "",
         element: <Navigate to="transactions" replace />,
       },
+
       {
         path: "transactions",
         element: <Transactions />,
+      },
+      {
+        path: "dashboard",
+        element: <Dashboard />,
       },
       {
         path: "newsletters",

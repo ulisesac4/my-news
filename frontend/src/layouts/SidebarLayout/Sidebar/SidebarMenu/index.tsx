@@ -194,10 +194,10 @@ function SidebarMenu() {
                   disableRipple
                   component={RouterLink}
                   onClick={closeSidebar}
-                  to="/overview"
-                  startIcon={<DesignServicesTwoToneIcon />}
+                  to="/management/dashboard"
+                  startIcon={<Mail />}
                 >
-                  Overview
+                  Dashboard
                 </Button>
               </ListItem>
             </List>
