@@ -1,3 +1,4 @@
+import AddCircleRounded from "@mui/icons-material/AddCircleRounded";
 import {
   Button,
   Dialog,
@@ -6,6 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
+  IconButton,
 } from "@mui/material";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useState } from "react";
@@ -16,6 +18,8 @@ import { IssueApi } from "src/core/API";
 
 function CreateIssueDialog({ open, onClose }) {
   const IssuesAPI = new IssueApi();
+  const [fileName, setFileName] = useState("");
+  const [issueAttachment, setissueAttachment] = useState("");
   const [issueContent, setIssueContent] = useState("");
   const [publishDate, setPublishDate] = useState(new Date());
   const [newsletterId, setNewsletterId] = useState(0);
@@ -26,6 +30,8 @@ function CreateIssueDialog({ open, onClose }) {
     setPublishDate(newValue);
   };
   const cleanElements = () => {
+    setFileName("");
+    setissueAttachment("");
     setIssueName("");
     setIssueContent("");
     setPublishDate(new Date());
@@ -36,7 +42,7 @@ function CreateIssueDialog({ open, onClose }) {
       if (newsletterId && issueName) {
         const recipients = await IssuesAPI.issuesPost({
           name: issueName,
-          attachments: "",
+          attachments: issueAttachment.replace("attch", fileName),
           content: issueContent,
           isSent: "false",
           newsletterId: newsletterId.toString(),
@@ -45,6 +51,7 @@ function CreateIssueDialog({ open, onClose }) {
         });
         if (recipients.status === 200) {
           toast("Issue have been created successfully");
+          cleanElements();
           onClose();
         } else {
           console.log("error", recipients.statusText);
@@ -100,16 +107,50 @@ function CreateIssueDialog({ open, onClose }) {
 
         <div>
           <TextField
+            autoFocus
             margin="dense"
             id="content"
-            label="Placeholder for attachments"
+            label="Your attachment"
             type="text"
             fullWidth
             variant="standard"
             onChange={(event) => {
-              setIssueName(event.target.value);
+              setissueAttachment(event.target.value);
             }}
-            value={issueName}
+            value={fileName}
+            InputProps={{
+              endAdornment: (
+                <IconButton
+                  color="primary"
+                  aria-label="upload picture"
+                  component="label"
+                >
+                  <input
+                    hidden
+                    type="file"
+                    onChange={(event) => {
+                      event.preventDefault();
+                      const reader = new FileReader();
+                      reader.onload = async (e) => {
+                        let text = e.target.result;
+                        setissueAttachment(
+                          JSON.stringify([
+                            {
+                              filename: "attch",
+                              content: e.target.result,
+                              encoding: "base64",
+                            },
+                          ])
+                        );
+                      };
+                      reader.readAsDataURL(event.target.files[0]);
+                      setFileName(event.target.files[0].name);
+                    }}
+                  />
+                  <AddCircleRounded />
+                </IconButton>
+              ),
+            }}
           />
         </div>
         <div>

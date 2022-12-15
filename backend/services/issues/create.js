@@ -12,11 +12,10 @@ module.exports = async (
   NewsletterId,
   TemplateId
 ) => {
-  attachments = AttachmentSeralizer.serialize(attachments);
   const issue = Issue.create({
     name,
     content,
-    attachments: JSON.stringify(attachments),
+    attachments,
     publishDate,
     isSent,
     NewsletterId,
