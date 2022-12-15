@@ -62,7 +62,6 @@ function CreateTemplateDialog({ open, onClose }) {
           Add a template that will be usable to any Newsletter Issue.
         </DialogContentText>
         <TextField
-          autoFocus
           margin="dense"
           id="name"
           label="Your new Template's name"
@@ -76,7 +75,6 @@ function CreateTemplateDialog({ open, onClose }) {
         />
         <div>
           <TextField
-            autoFocus
             margin="dense"
             id="content"
             label="Your new Template's content"

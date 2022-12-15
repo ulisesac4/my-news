@@ -69,7 +69,6 @@ function UpdateTemplateDialog({
           You can edit the name and content of your Template here
         </DialogContentText>
         <TextField
-          autoFocus
           margin="dense"
           id="name"
           label="Your new Template's name"
@@ -83,7 +82,6 @@ function UpdateTemplateDialog({
         />
         <div>
           <TextField
-            autoFocus
             margin="dense"
             id="content"
             label="Your new Template's content"

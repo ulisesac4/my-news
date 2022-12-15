@@ -63,7 +63,6 @@ function UpdateNewsletterDialog({
           You can edit the name of your Newsletter here
         </DialogContentText>
         <TextField
-          autoFocus
           margin="dense"
           id="name"
           label="Your new Newsletter's name"

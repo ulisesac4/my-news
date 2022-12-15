@@ -69,7 +69,6 @@ function CreateRecipientDialog({ open, onClose }) {
 
         <div>
           <TextField
-            autoFocus
             margin="dense"
             id="content"
             label="Your new Recipients"

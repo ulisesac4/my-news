@@ -55,7 +55,6 @@ function CreateNewsletterDialog({ open, onClose }) {
           To create Issues add a Newsletter.
         </DialogContentText>
         <TextField
-          autoFocus
           margin="dense"
           id="name"
           label="Your new Newsletter's name"

@@ -107,7 +107,6 @@ function CreateIssueDialog({ open, onClose }) {
 
         <div>
           <TextField
-            autoFocus
             margin="dense"
             id="content"
             label="Your attachment"
