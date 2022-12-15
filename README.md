@@ -15,6 +15,8 @@ This is only a one time step. This must be done before launching for the first t
 Also make an `.env` file inside the `backend` folder. It must export the following vars:
 
   - *PORT=* The port in which your server will run
+  - *EMAIL_SENDER=* The author of the newsletter
+  - *GENERATED_PASSWORD=* The generated password that gmail gives you to use an account for sending email with the package nodemailer. Check this to get your pass https://miracleio.me/snippets/use-gmail-with-nodemailer/
 
 ## Launching the dev environment
 
