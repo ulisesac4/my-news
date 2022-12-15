@@ -1,4 +1,5 @@
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import SendIcon from "@mui/icons-material/Send";
 import {
   Box,
   Card,
@@ -50,6 +51,27 @@ function Issues() {
       console.log("error", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const sendIssue = async (id) => {
+    try {
+      setIsLoading(true);
+      const issues = await IssuesAPI.issuesSendPost({
+        id,
+      });
+      if (issues.status === 200) {
+      } else {
+        toast("Your Issue have been send successfully");
+      }
+      fetchIssues()
+        .then((success) => {})
+        .catch((err) => {});
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+      fetchIssues();
     }
   };
 
@@ -138,6 +160,19 @@ function Issues() {
                           </Label>
                         </TableCell>
                         <TableCell align="center">
+                          {!issue.isSent && (
+                            <Tooltip title="Send Issue" arrow>
+                              <IconButton
+                                size="small"
+                                onClick={async () => {
+                                  await sendIssue(issue.id);
+                                }}
+                              >
+                                <SendIcon fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                          )}
+
                           <Tooltip title="Delete Issue" arrow>
                             <IconButton
                               size="small"
