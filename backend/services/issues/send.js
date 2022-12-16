@@ -19,17 +19,25 @@ module.exports = async (id) => {
       { model: Template },
     ],
   });
+  const tempIssue = issue.Template.content.replace(
+    ">>!content!<<",
+    issue.content
+  );
 
-  await NodemailerInstance.sendMail({
-    from: process.env.EMAIL_SENDER,
-    to: issue.Newsletter.Recipients.map((recipient) => {
-      return recipient.email;
-    }).join(", "),
-    subject: issue.name,
-    text: removeTags(issue.content),
-    html: issue.Template.content.replace(">>!content!<<", issue.content),
-    attachments: JSON.parse(issue.attachments),
+  const promiseSendEmail = issue.Newsletter.Recipients.map((recipient) => {
+    return NodemailerInstance.sendMail({
+      from: process.env.EMAIL_SENDER,
+      to: recipient.email,
+      subject: issue.name,
+      text: removeTags(issue.content),
+      html: tempIssue.replace(
+        ">>>{UNSUSCRIBE}<<<",
+        `http://localhost:${8765}/unsuscribe/${recipient.email}`
+      ),
+      attachments: JSON.parse(issue.attachments),
+    });
   });
+  await Promise.all(promiseSendEmail);
 
   await Issue.update({ isSent: true }, { where: { id } });
 
