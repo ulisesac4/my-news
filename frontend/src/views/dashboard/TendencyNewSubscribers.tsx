@@ -43,7 +43,8 @@ const AvatarWrapper = styled(Avatar)(
   `
 );
 
-function TendencyNewSubscribers({ labels, data }) {
+function TendencyNewSubscribers({ labels, data, totalSubs }) {
+  console.log("le data", data);
   const theme = useTheme();
 
   const Box1Options: ApexOptions = {
@@ -62,15 +63,7 @@ function TendencyNewSubscribers({ labels, data }) {
         enabled: false,
       },
     },
-    labels: [
-      "Monday",
-      "Tueday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
+    labels: labels,
     stroke: {
       curve: "smooth",
       colors: [theme.colors.primary.main],
@@ -101,7 +94,7 @@ function TendencyNewSubscribers({ labels, data }) {
       y: {
         title: {
           formatter: function () {
-            return "Price: $";
+            return "New Subscribers: ";
           },
         },
       },
@@ -114,7 +107,7 @@ function TendencyNewSubscribers({ labels, data }) {
   const Box1Data = [
     {
       name: "Bitcoin",
-      data: [55.701, 57.598, 48.607, 46.439, 58.755, 46.978, 58.16],
+      data: data,
     },
   ];
 
@@ -163,7 +156,7 @@ function TendencyNewSubscribers({ labels, data }) {
               alignItems="flex-start"
               justifyContent="space-between"
             >
-              <Label color="secondary">Per week</Label>
+              <Label color="secondary">Total Subscribers</Label>
             </Box>
             <Box
               mt={3}
@@ -184,7 +177,7 @@ function TendencyNewSubscribers({ labels, data }) {
                     pr: 1,
                   }}
                 >
-                  +{"56,475.99 "}
+                  {totalSubs}
                 </Typography>
               </Box>
               <TrendingUpTwoToneIcon

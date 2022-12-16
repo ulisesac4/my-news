@@ -1,4 +1,12 @@
-const { getWeek, sub, startOfWeek, endOfWeek } = require("date-fns");
+const {
+  getWeek,
+  sub,
+  startOfWeek,
+  endOfWeek,
+  formatISO,
+  format,
+} = require("date-fns");
+
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const Models = require("../../models");
@@ -23,7 +31,7 @@ module.exports = async () => {
     amountSent: 0,
     unSent: { name: "To be planned", date: "To be planned" },
     amountunSent: 0,
-
+    subscribers: 0,
     weeks: [],
     entries: [],
   };
@@ -58,9 +66,12 @@ module.exports = async () => {
     attributes: ["id", "isSent"],
   });
 
+  const all = await NewsletterRecipient.findAll({ attributes: ["id"] });
+
   //console.log(sentCount, unSentCount, sentRows);
   data.amountSent = sentCount.length;
   data.amountunSent = unSentCount.length;
+  data.subscribers = all.length;
   try {
     data.sent.name = sent[0].name;
     data.sent.date = sent[0].publishDate;
@@ -78,19 +89,19 @@ module.exports = async () => {
   const startOfWeekMinus4 = sub(startOfWeekMinus3, { weeks: 1 });
 
   data.weeks = [
-    startOfCurrentWeek,
-    startOfWeekMinus1,
-    startOfWeekMinus2,
-    startOfWeekMinus3,
-    startOfWeekMinus4,
+    format(startOfWeekMinus4, " MMMM dd yyyy "),
+    format(startOfWeekMinus3, " MMMM dd yyyy "),
+    format(startOfWeekMinus2, " MMMM dd yyyy "),
+    format(startOfWeekMinus1, " MMMM dd yyyy "),
+    format(startOfCurrentWeek, " MMMM dd yyyy "),
   ];
 
   data.entries = [
-    await countRecipients(startOfCurrentWeek),
-    await countRecipients(startOfWeekMinus1),
-    await countRecipients(startOfWeekMinus2),
-    await countRecipients(startOfWeekMinus3),
     await countRecipients(startOfWeekMinus4),
+    await countRecipients(startOfWeekMinus3),
+    await countRecipients(startOfWeekMinus2),
+    await countRecipients(startOfWeekMinus1),
+    await countRecipients(startOfCurrentWeek),
   ];
 
   return data;

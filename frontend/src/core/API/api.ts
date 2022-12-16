@@ -718,6 +718,87 @@ export interface RecipientsIdGet200ResponseRecipientsInner {
 /**
  * 
  * @export
+ * @interface StatisticsGet200Response
+ */
+export interface StatisticsGet200Response {
+    /**
+     * 
+     * @type {StatisticsGet200ResponseData}
+     * @memberof StatisticsGet200Response
+     */
+    'data'?: StatisticsGet200ResponseData;
+}
+/**
+ * 
+ * @export
+ * @interface StatisticsGet200ResponseData
+ */
+export interface StatisticsGet200ResponseData {
+    /**
+     * 
+     * @type {StatisticsGet200ResponseDataSent}
+     * @memberof StatisticsGet200ResponseData
+     */
+    'sent'?: StatisticsGet200ResponseDataSent;
+    /**
+     * 
+     * @type {number}
+     * @memberof StatisticsGet200ResponseData
+     */
+    'amountSent'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof StatisticsGet200ResponseData
+     */
+    'subscribers'?: number;
+    /**
+     * 
+     * @type {StatisticsGet200ResponseDataSent}
+     * @memberof StatisticsGet200ResponseData
+     */
+    'unSent'?: StatisticsGet200ResponseDataSent;
+    /**
+     * 
+     * @type {number}
+     * @memberof StatisticsGet200ResponseData
+     */
+    'amountunSent'?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof StatisticsGet200ResponseData
+     */
+    'weeks'?: Array<string>;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof StatisticsGet200ResponseData
+     */
+    'entries'?: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface StatisticsGet200ResponseDataSent
+ */
+export interface StatisticsGet200ResponseDataSent {
+    /**
+     * 
+     * @type {string}
+     * @memberof StatisticsGet200ResponseDataSent
+     */
+    'name'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof StatisticsGet200ResponseDataSent
+     */
+    'date'?: string;
+}
+/**
+ * 
+ * @export
  * @interface TemplatesDelete200Response
  */
 export interface TemplatesDelete200Response {
@@ -1839,6 +1920,100 @@ export class RecipientApi extends BaseAPI {
      */
     public recipientsPost(recipientsDeleteRequest: RecipientsDeleteRequest, options?: AxiosRequestConfig) {
         return RecipientApiFp(this.configuration).recipientsPost(recipientsDeleteRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StatisticApi - axios parameter creator
+ * @export
+ */
+export const StatisticApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create an Template
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statisticsGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/statistics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StatisticApi - functional programming interface
+ * @export
+ */
+export const StatisticApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StatisticApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create an Template
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async statisticsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StatisticsGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.statisticsGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StatisticApi - factory interface
+ * @export
+ */
+export const StatisticApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StatisticApiFp(configuration)
+    return {
+        /**
+         * Create an Template
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        statisticsGet(options?: any): AxiosPromise<StatisticsGet200Response> {
+            return localVarFp.statisticsGet(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * StatisticApi - object-oriented interface
+ * @export
+ * @class StatisticApi
+ * @extends {BaseAPI}
+ */
+export class StatisticApi extends BaseAPI {
+    /**
+     * Create an Template
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StatisticApi
+     */
+    public statisticsGet(options?: AxiosRequestConfig) {
+        return StatisticApiFp(this.configuration).statisticsGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

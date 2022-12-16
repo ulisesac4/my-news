@@ -3,7 +3,7 @@ module.exports = {
   /**
    * @openapi
    * /statistics:
-   *   post:
+   *   get:
    *     tags:
    *     - Statistic
    *     description: Create an Template
@@ -26,6 +26,9 @@ module.exports = {
    *                         date:
    *                           type: string
    *                     amountSent:
+   *                       type: integer
+   *                       format: int32
+   *                     subscribers:
    *                       type: integer
    *                       format: int32
    *                     unSent:
