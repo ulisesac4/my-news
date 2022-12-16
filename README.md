@@ -27,3 +27,7 @@ Your frontend will be accesible in the `localhost:8765` url in your browser and 
 ## Setting templates
 
 Keep in mind the limitations of email services to render HTML templates. To insert your data you need 2 tags into the template. Put `>>!content!<<` where your content will reside in the actual publication and `>>>{UNSUBSCRIBE}<<<` where the unsubscribe link will be.
+
+## About unsusbscriptions from the user email
+
+The url you are given is based in the frontend, paste it in the browser in which the dev environment is running and you will see the page ready to unsubscribe anything you have.
