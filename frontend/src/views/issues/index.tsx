@@ -26,6 +26,8 @@ import {
 } from "src/core/API";
 import CreateIssueDialog from "./createIssueDialog";
 
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
 function Issues() {
   const [issues, setIssues] = useState<
     IssuesNewsletterIdGet200ResponseIssuesInner[]
@@ -41,6 +43,7 @@ function Issues() {
   const fetchIssues = async () => {
     try {
       setIsLoading(true);
+
       const issues = await IssuesAPI.issuesNewsletterIdGet(newsletterId);
       if (issues.status === 200) {
         setIssues(issues.data.issues);
@@ -81,6 +84,7 @@ function Issues() {
 
   const closeCreateDialog = async () => {
     setIsCreateOpen(false);
+    await delay(2000);
     fetchIssues()
       .then((success) => {})
       .catch((err) => {});
