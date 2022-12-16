@@ -74,11 +74,11 @@ module.exports = async () => {
   data.subscribers = all.length;
   try {
     data.sent.name = sent[0].name;
-    data.sent.date = sent[0].publishDate;
+    data.sent.date = format(sent[0].publishDate, " MMMM dd yyyy ");
   } catch (error) {}
   try {
     data.unSent.name = unSent[0].name;
-    data.unSent.date = unSent[0].publishDate;
+    data.unSent.date = format(unSent[0].publishDate, " MMMM dd yyyy ");
   } catch (error) {}
 
   const currentDate = new Date();

@@ -11,7 +11,15 @@ import { useEffect, useState } from "react";
 import { StatisticApi, StatisticsGet200ResponseData } from "src/core/API";
 
 function DashboardCrypto() {
-  const [data, setData] = useState<StatisticsGet200ResponseData>({});
+  const [data, setData] = useState<StatisticsGet200ResponseData>({
+    sent: { name: "To be planned", date: "To be planned" },
+    amountSent: 0,
+    unSent: { name: "To be planned", date: "To be planned" },
+    amountunSent: 0,
+    subscribers: 0,
+    weeks: [],
+    entries: [],
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const StatisticsAPI = new StatisticApi();
@@ -53,7 +61,12 @@ function DashboardCrypto() {
           spacing={4}
         >
           <Grid item xs={12}>
-            <Summary />
+            <Summary
+              amountSent={data.amountSent}
+              sent={data.sent}
+              amountunSent={data.amountunSent}
+              unsent={data.unSent}
+            />
           </Grid>
           <Grid item xs={12}>
             <TendencyNewSubscribers

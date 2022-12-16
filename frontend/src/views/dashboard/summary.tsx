@@ -13,6 +13,9 @@ import {
   IconButton,
 } from "@mui/material";
 import AddTwoToneIcon from "@mui/icons-material/AddTwoTone";
+import ScheduleSend from "@mui/icons-material/ScheduleSend";
+import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
+import SendAndArchive from "@mui/icons-material/SendAndArchive";
 import SummaryCard from "./SummaryCard";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 
@@ -77,7 +80,8 @@ const CardAddAction = styled(Card)(
   `
 );
 
-function Summary() {
+function Summary({ sent, unsent, amountSent, amountunSent }) {
+  console.log("x", sent, unsent);
   return (
     <>
       <Box
@@ -94,10 +98,10 @@ function Summary() {
         <SummaryCard
           icon={
             <IconButton aria-label="delete" size="large">
-              <DeleteTwoToneIcon fontSize="inherit" />
+              <NotificationImportantIcon fontSize="inherit" />
             </IconButton>
           }
-          quantity={351}
+          quantity={amountSent}
           quantityContext="that have been sent"
           subtitle=""
           title="Total Issues"
@@ -106,11 +110,11 @@ function Summary() {
         <SummaryCard
           icon={
             <IconButton aria-label="delete" size="large">
-              <DeleteTwoToneIcon fontSize="inherit" />
+              <SendAndArchive fontSize="inherit" />
             </IconButton>
           }
-          quantity="The title"
-          quantityContext="On ..."
+          quantity={sent["name"]}
+          quantityContext={`On ${sent["date"]}`}
           subtitle=""
           title="The last sent Issue is"
         />
@@ -118,10 +122,10 @@ function Summary() {
         <SummaryCard
           icon={
             <IconButton aria-label="delete" size="large">
-              <DeleteTwoToneIcon fontSize="inherit" />
+              <NotificationImportantIcon fontSize="inherit" />
             </IconButton>
           }
-          quantity={351}
+          quantity={amountunSent}
           quantityContext="that haven't been sent"
           subtitle=""
           title="Total Issues"
@@ -130,11 +134,11 @@ function Summary() {
         <SummaryCard
           icon={
             <IconButton aria-label="delete" size="large">
-              <DeleteTwoToneIcon fontSize="inherit" />
+              <ScheduleSend fontSize="inherit" />
             </IconButton>
           }
-          quantity="The title"
-          quantityContext="On ..."
+          quantity={unsent["name"]}
+          quantityContext={`On ${unsent["date"]}`}
           subtitle=""
           title="The next Issue to be sent is"
         />
