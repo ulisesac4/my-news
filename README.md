@@ -23,3 +23,7 @@ Also make an `.env` file inside the `backend` folder. It must export the followi
 Run the `launchDevEnv.sh` bash file. This will setup the docker network. When it is ready you can edit any file in the fronend or backend and you will have hot reload.
 
 Your frontend will be accesible in the `localhost:8765` url in your browser and the backend will be available in the specified port that you configured in the `Setting up` phase.
+
+## Setting templates
+
+Keep in mind the limitations of email services to render HTML templates. To insert your data you need 2 tags into the template. Put `>>!content!<<` where your content will reside in the actual publication and `>>>{UNSUBSCRIBE}<<<` where the unsubscribe link will be.
