@@ -718,6 +718,44 @@ export interface RecipientsIdGet200ResponseRecipientsInner {
 /**
  * 
  * @export
+ * @interface RecipientsSubscriptionsEmailGet200Response
+ */
+export interface RecipientsSubscriptionsEmailGet200Response {
+    /**
+     * 
+     * @type {Array<RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner>}
+     * @memberof RecipientsSubscriptionsEmailGet200Response
+     */
+    'subscriptions'?: Array<RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner
+ */
+export interface RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner
+     */
+    'recipientId'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner
+     */
+    'newsletterId'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
  * @interface StatisticsGet200Response
  */
 export interface StatisticsGet200Response {
@@ -1802,6 +1840,39 @@ export const RecipientApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Get all Recipients
+         * @param {string} email The Email of the user that will check its subscriptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recipientsSubscriptionsEmailGet: async (email: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'email' is not null or undefined
+            assertParamExists('recipientsSubscriptionsEmailGet', 'email', email)
+            const localVarPath = `/recipients/subscriptions/{email}`
+                .replace(`{${"email"}}`, encodeURIComponent(String(email)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1842,6 +1913,16 @@ export const RecipientApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.recipientsPost(recipientsDeleteRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Get all Recipients
+         * @param {string} email The Email of the user that will check its subscriptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async recipientsSubscriptionsEmailGet(email: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RecipientsSubscriptionsEmailGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.recipientsSubscriptionsEmailGet(email, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -1878,6 +1959,15 @@ export const RecipientApiFactory = function (configuration?: Configuration, base
          */
         recipientsPost(recipientsDeleteRequest: RecipientsDeleteRequest, options?: any): AxiosPromise<RecipientsDelete200Response> {
             return localVarFp.recipientsPost(recipientsDeleteRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get all Recipients
+         * @param {string} email The Email of the user that will check its subscriptions
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        recipientsSubscriptionsEmailGet(email: string, options?: any): AxiosPromise<RecipientsSubscriptionsEmailGet200Response> {
+            return localVarFp.recipientsSubscriptionsEmailGet(email, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1920,6 +2010,17 @@ export class RecipientApi extends BaseAPI {
      */
     public recipientsPost(recipientsDeleteRequest: RecipientsDeleteRequest, options?: AxiosRequestConfig) {
         return RecipientApiFp(this.configuration).recipientsPost(recipientsDeleteRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get all Recipients
+     * @param {string} email The Email of the user that will check its subscriptions
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RecipientApi
+     */
+    public recipientsSubscriptionsEmailGet(email: string, options?: AxiosRequestConfig) {
+        return RecipientApiFp(this.configuration).recipientsSubscriptionsEmailGet(email, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

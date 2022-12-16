@@ -1,6 +1,8 @@
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import {
+  Box,
+  Card,
+  CardHeader,
   CircularProgress,
   Divider,
   IconButton,
@@ -11,21 +13,14 @@ import {
   TableHead,
   TableRow,
   Tooltip,
-  Card,
-  CardHeader,
-  Box,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import NewsletterSelect from "src/components/NewsletterSelect";
 import PageTemplate from "src/components/PageTemplate";
 import {
-  RecipientsDelete200ResponseRecipients,
   RecipientApi,
+  RecipientsDelete200ResponseRecipients,
 } from "src/core/API";
 import CreateRecipientDialog from "./createRecipientDialog";
 

@@ -1,11 +1,29 @@
-import { Box, Container, Card } from "@mui/material";
-import { Helmet } from "react-helmet-async";
-
+import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import {
+  Box,
+  Card,
+  CircularProgress,
+  Container,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Logo from "src/components/LogoSign";
-import Hero from "./Hero";
+import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
-import { useEffect } from "react";
+import { toast } from "react-toastify";
+import Logo from "src/components/LogoSign";
+import {
+  RecipientApi,
+  RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner,
+} from "src/core/API";
+import Hero from "./Hero";
 
 const OverviewWrapper = styled(Box)(
   () => `
@@ -17,9 +35,56 @@ const OverviewWrapper = styled(Box)(
 );
 
 function Overview(props) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [recipients, setRecipients] = useState<
+    RecipientsSubscriptionsEmailGet200ResponseSubscriptionsInner[]
+  >([{ name: "0", newsletterId: 0, recipientId: 0 }]);
   const { email } = useParams();
 
-  useEffect(() => {}, [email]);
+  const RecipientsAPI = new RecipientApi();
+
+  const fetchSubscriptions = async () => {
+    try {
+      setIsLoading(true);
+      const recipients = await RecipientsAPI.recipientsSubscriptionsEmailGet(
+        email
+      );
+      if (recipients.status === 200) {
+        setRecipients(recipients.data.subscriptions);
+      } else {
+        // error message here
+      }
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const destroyRecipient = async (id, newsletterId) => {
+    try {
+      setIsLoading(true);
+      const recipients = await RecipientsAPI.recipientsDelete({
+        id,
+        newsletterId,
+      });
+      if (recipients.status === 200) {
+      } else {
+        toast("Your Recipient have been deleted successfully");
+      }
+      fetchSubscriptions()
+        .then((success) => {})
+        .catch((err) => {});
+    } catch (error) {
+      console.log("error", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSubscriptions();
+  }, [email]);
   return (
     <OverviewWrapper>
       <Helmet>
@@ -31,6 +96,50 @@ function Overview(props) {
         </Box>
         <Card sx={{ p: 10, mb: 10, borderRadius: 12 }}>
           <Hero />
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell align="center">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {!isLoading ? (
+                  recipients.length ? (
+                    recipients.map((recipient) => {
+                      return (
+                        <TableRow key={recipient.newsletterId}>
+                          <TableCell>{recipient.name}</TableCell>
+                          <TableCell align="center">
+                            <Tooltip title="Delete Recipient" arrow>
+                              <IconButton
+                                size="small"
+                                onClick={async () => {
+                                  await destroyRecipient(
+                                    recipient.recipientId,
+                                    recipient.newsletterId
+                                  );
+                                }}
+                              >
+                                <DeleteTwoToneIcon fontSize="small" />
+                              </IconButton>
+                            </Tooltip>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={6}>no records found</TableCell>{" "}
+                    </TableRow>
+                  )
+                ) : (
+                  <CircularProgress />
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Card>
       </Container>
     </OverviewWrapper>
