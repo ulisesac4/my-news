@@ -23,7 +23,7 @@ function Overview(props) {
   return (
     <OverviewWrapper>
       <Helmet>
-        <title>Unsuscribe from your Newsletters</title>
+        <title>Unsubscribe from your Newsletters</title>
       </Helmet>
       <Container maxWidth="lg">
         <Box display="flex" justifyContent="center" py={5} alignItems="center">

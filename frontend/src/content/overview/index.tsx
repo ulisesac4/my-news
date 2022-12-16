@@ -14,7 +14,7 @@ const OverviewWrapper = styled(Box)(
 `
 );
 
-function Unsuscribe() {
+function Unsubscribe() {
   return (
     <OverviewWrapper>
       <Helmet>
@@ -32,4 +32,4 @@ function Unsuscribe() {
   );
 }
 
-export default Unsuscribe;
+export default Unsubscribe;

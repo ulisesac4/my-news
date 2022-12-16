@@ -31,8 +31,8 @@ module.exports = async (id) => {
       subject: issue.name,
       text: removeTags(issue.content),
       html: tempIssue.replace(
-        ">>>{UNSUSCRIBE}<<<",
-        `http://localhost:${8765}/unsuscribe/${recipient.email}`
+        ">>>{UNSUBSCRIBE}<<<",
+        `http://localhost:${8765}/unsubscribe/${recipient.email}`
       ),
       attachments: JSON.parse(issue.attachments),
     });
