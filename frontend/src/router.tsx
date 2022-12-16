@@ -17,6 +17,7 @@ const Loader = (Component) => (props) =>
 // Pages
 
 const Overview = Loader(lazy(() => import("src/content/overview")));
+const Unsuscribe = Loader(lazy(() => import("src/views/unsuscribe")));
 
 // Dashboards
 
@@ -89,6 +90,10 @@ const routes: RouteObject[] = [
       {
         path: "/",
         element: <Overview />,
+      },
+      {
+        path: "/unsuscribe/:email",
+        element: <Unsuscribe />,
       },
       {
         path: "overview",

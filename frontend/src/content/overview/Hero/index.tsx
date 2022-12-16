@@ -1,8 +1,8 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from "@mui/material";
 
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
 const TypographyH1 = styled(Typography)(
   ({ theme }) => `
@@ -72,7 +72,7 @@ const TsAvatar = styled(Box)(
 
 function Hero() {
   return (
-    <Container maxWidth="lg" sx={{ textAlign: 'center' }}>
+    <Container maxWidth="lg" sx={{ textAlign: "center" }}>
       <Grid
         spacing={{ xs: 6, md: 10 }}
         justifyContent="center"
@@ -80,7 +80,6 @@ function Hero() {
         container
       >
         <Grid item md={10} lg={8} mx="auto">
-          <LabelWrapper color="success">Version 2.0.0</LabelWrapper>
           <TypographyH1 sx={{ mb: 2 }} variant="h1">
             Tokyo Free White React Typescript Admin Dashboard
           </TypographyH1>

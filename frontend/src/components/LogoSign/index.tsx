@@ -5,9 +5,9 @@ import {
   TooltipProps,
   tooltipClasses,
   styled,
-  useTheme
-} from '@mui/material';
-import { Link } from 'react-router-dom';
+  useTheme,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
 const LogoWrapper = styled(Link)(
   ({ theme }) => `
@@ -84,14 +84,14 @@ const TooltipWrapper = styled(({ className, ...props }: TooltipProps) => (
     backgroundColor: theme.colors.alpha.trueWhite[100],
     color: theme.palette.getContrastText(theme.colors.alpha.trueWhite[100]),
     fontSize: theme.typography.pxToRem(12),
-    fontWeight: 'bold',
+    fontWeight: "bold",
     borderRadius: theme.general.borderRadiusSm,
     boxShadow:
-      '0 .2rem .8rem rgba(7,9,25,.18), 0 .08rem .15rem rgba(7,9,25,.15)'
+      "0 .2rem .8rem rgba(7,9,25,.18), 0 .08rem .15rem rgba(7,9,25,.15)",
   },
   [`& .${tooltipClasses.arrow}`]: {
-    color: theme.colors.alpha.trueWhite[100]
-  }
+    color: theme.colors.alpha.trueWhite[100],
+  },
 }));
 
 function Logo() {
@@ -105,11 +105,11 @@ function Logo() {
       <LogoWrapper to="/overview">
         <Badge
           sx={{
-            '.MuiBadge-badge': {
+            ".MuiBadge-badge": {
               fontSize: theme.typography.pxToRem(11),
               right: -2,
-              top: 8
-            }
+              top: 8,
+            },
           }}
           overlap="circular"
           color="success"
